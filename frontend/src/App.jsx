@@ -1,41 +1,77 @@
 import { useState, useEffect } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
+
 import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [quotes, setQuotes] = useState([]);
+  const [name, setName] = useState('');
+  const [quote, setQuote] = useState('');
 
   useEffect(() => {
-    fetch('/api')
-      .then((response) => response.json())
+    fetch('/api/quotes')
+      .then((response) => {
+        console.log(response);
+        return response.json();
+      })
       .then((result) => {
-        alert(`Hello ${result.hello}!`);
+        console.log(result);
+        setQuotes(result);
       });
   }, []);
 
+  function handleQuoteForm(e) {
+    e.preventDefault();
+    const body = {
+      name: name,
+      quote: quote,
+    };
+    fetch('/api/post', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log('Success', response);
+        } else {
+          console.log('Failure');
+        }
+        return response.json();
+      })
+      .then((result) => setQuotes(result));
+  }
+
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
+      <h1>Kända citat</h1>
+
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+        {quotes &&
+          quotes.map((quote) => (
+            <div key={quote.id}>
+              <p style={{ fontStyle: 'italic' }}>"{quote.quote}"</p>
+              <p>{quote.name}</p>
+            </div>
+          ))}
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <div style={{ display: 'flex', flexDirection: 'column' }}></div>
+      <form
+        onSubmit={handleQuoteForm}
+        style={{ display: 'flex', flexDirection: 'column' }}
+      >
+        <input
+          onInput={(e) => setName(e.target.value)}
+          type="text"
+          placeholder="Namn"
+        />
+        <textarea
+          onInput={(e) => setQuote(e.target.value)}
+          placeholder="Citat"
+        />
+        <button type="submit">Lägg till</button>
+      </form>
     </>
   );
 }
