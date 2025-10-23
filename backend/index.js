@@ -18,8 +18,6 @@ app.use(express.urlencoded({ extended: true }));
 
 port = process.env.PORT || 3000;
 
-app.use(express.static(path.join(path.resolve(), 'dist')));
-
 app.get('/api/quotes', async (_request, response) => {
   const { rows } = await client.query('SELECT * FROM quotes;');
   response.send(rows);
@@ -27,18 +25,22 @@ app.get('/api/quotes', async (_request, response) => {
 
 app.post('/api/post', async (request, response) => {
   const { name, quote } = request.body;
-  await client.query('INSERT INTO quotes (name, quote) VALUES ($1, $2)', [
-    name,
-    quote,
-  ]);
-  const { rows } = await client.query('SELECT * FROM quotes;');
+  const { rows } = await client.query(
+    'INSERT INTO quotes (name, quote) VALUES ($1, $2) RETURNING *',
+    [name, quote]
+  );
 
   response.send(rows);
 });
 
-// app.get('/api', (_request, response) => {
-//   response.send({ hello: 'world' });
-// });
+app.delete('/api/delete/:id', async (request, response) => {
+  console.log(request);
+  const { id } = request.params;
+  await client.query('DELETE FROM quotes WHERE id = $1;', [id]);
+  response.send('Delete succesful');
+});
+
+app.use(express.static(path.join(path.resolve(), 'dist')));
 
 app.listen(port, () => {
   console.log(`Server listens on port ${port}`);
