@@ -7,8 +7,9 @@ function App() {
   const [name, setName] = useState('');
   const [quote, setQuote] = useState('');
   const [inProgress, setInProgress] = useState(null);
-  const [quoteOutput, setQuoteOutput] = useState(null);
+  const [quoteDisplay, setQuoteOutput] = useState(null);
   const [add, setAdd] = useState(false);
+  // const [addUpdate, setAddUpdate] = useState(false);
 
   useEffect(() => {
     fetch('/api/quotes')
@@ -26,6 +27,7 @@ function App() {
     setInProgress(null);
     setName('');
     setQuote('');
+    setAdd(false);
   }
 
   function handleQuoteForm(e) {
@@ -46,6 +48,13 @@ function App() {
   }
 
   function handleDelete(id) {
+    const proceed = prompt(`Vill du radera 
+      namn: ${quoteDisplay.name}
+      citat: ${quoteDisplay.quote}
+      Svara med författarens namn om du vill fortsätta.`);
+
+    if (proceed !== quoteDisplay.name) return;
+
     setInProgress(id);
     fetch(`/api/delete/${id}`, {
       method: 'DELETE',
@@ -65,6 +74,17 @@ function App() {
     setQuoteOutput(null);
   }
 
+  // function sendUpdate(id) {
+  //   fetch(`/api/post/${id}`, {
+  //     method: 'PUT',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({ name: name, quote: quote }),
+  //   })
+  //     .then((response) => response.json())
+  //     .then((result) => console.log(result));
+  // }
   return (
     <>
       <div style={{ display: 'flex' }}>
@@ -84,7 +104,7 @@ function App() {
                 }}
                 onClick={() => setQuoteOutput(quote)}
                 disabled={
-                  quoteOutput && quoteOutput.id === quote.id ? true : false
+                  quoteDisplay && quoteDisplay.id === quote.id ? true : false
                 }
               >
                 <p>{quote.name}</p>
@@ -97,15 +117,69 @@ function App() {
             display: 'flex',
             flexGrow: 1,
             flexDirection: 'column',
-            justifyContent: 'center',
+            justifyContent: add ? 'space-between' : 'center',
             alignItems: 'center',
             // border: '1px solid #fff',
           }}
         >
-          <p style={{ fontStyle: 'italic', textAlign: 'center' }}>
-            {quoteOutput && `"${quoteOutput.quote}"`}
-          </p>
-          <p>{quoteOutput && quoteOutput.name}</p>
+          <div className={add ? 'showForm' : 'hideForm'}>
+            <form
+              onSubmit={handleQuoteForm}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                width: '500px',
+              }}
+            >
+              <input
+                onInput={(e) => setName(e.target.value)}
+                value={name}
+                type="text"
+                placeholder="Name"
+                style={{
+                  textAlign: 'center',
+                  padding: '10px',
+                  fontFamily: 'sans-serif',
+                }}
+              />
+              <textarea
+                onInput={(e) => setQuote(e.target.value)}
+                value={quote}
+                cols={20}
+                rows={7}
+                placeholder="Quote"
+                style={{
+                  textAlign: 'center',
+                  padding: '10px',
+                  fontFamily: 'sans-serif',
+                }}
+              />
+              <button
+                onClick={() => setInProgress('add')}
+                type="submit"
+                style={{ display: 'flex', justifyContent: 'center' }}
+              >
+                {inProgress === 'add' ? (
+                  <div className="loader"></div>
+                ) : (
+                  'Lägg till'
+                )}
+              </button>
+            </form>
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <p style={{ fontStyle: 'italic', textAlign: 'center' }}>
+              {quoteDisplay && `"${quoteDisplay.quote}"`}
+            </p>
+            <p>{quoteDisplay && quoteDisplay.name}</p>
+          </div>
         </div>
         <div
           style={{
@@ -131,10 +205,27 @@ function App() {
           >
             {add ? 'Hide form' : 'Add new +'}
           </button>
-          {quoteOutput && (
+
+          {/* <button
+            className="button"
+            style={{
+              border: '1px solid grey',
+              display: 'flex',
+              alignItems: 'center',
+              borderRadius: '5px',
+              textAlign: 'center',
+              margin: '10px',
+              cursor: 'pointer',
+            }}
+            onClick={() => setAddUpdate(!addUpdate)}
+          >
+            {addUpdate ? 'Hide form' : 'Update quote'}
+          </button> */}
+
+          {quoteDisplay && (
             <button
               className="button"
-              onClick={() => handleDelete(quoteOutput.id)}
+              onClick={() => handleDelete(quoteDisplay.id)}
               style={{
                 border: '1px solid grey',
                 display: 'flex',
@@ -145,7 +236,7 @@ function App() {
                 cursor: 'pointer',
               }}
             >
-              {quoteOutput && inProgress === quoteOutput.id ? (
+              {quoteDisplay && inProgress === quoteDisplay.id ? (
                 <div className="loader"></div>
               ) : (
                 'Delete quote'
@@ -153,48 +244,6 @@ function App() {
             </button>
           )}
         </div>
-      </div>
-
-      <div className={add === true ? 'showForm' : 'hideForm'}>
-        <form
-          onSubmit={handleQuoteForm}
-          style={{ display: 'flex', flexDirection: 'column', width: '500px' }}
-        >
-          <input
-            onInput={(e) => setName(e.target.value)}
-            value={name}
-            type="text"
-            placeholder="Name"
-            style={{
-              textAlign: 'center',
-              padding: '10px',
-              fontFamily: 'sans-serif',
-            }}
-          />
-          <textarea
-            onInput={(e) => setQuote(e.target.value)}
-            value={quote}
-            cols={40}
-            rows={10}
-            placeholder="Quote"
-            style={{
-              textAlign: 'center',
-              padding: '10px',
-              fontFamily: 'sans-serif',
-            }}
-          />
-          <button
-            onClick={() => setInProgress('add')}
-            type="submit"
-            style={{ display: 'flex', justifyContent: 'center' }}
-          >
-            {inProgress === 'add' ? (
-              <div className="loader"></div>
-            ) : (
-              'Lägg till'
-            )}
-          </button>
-        </form>
       </div>
     </>
   );

@@ -34,6 +34,17 @@ app.post('/api/post', async (request, response) => {
   response.send(rows);
 });
 
+app.put('/api/put/:id', async (request, response) => {
+  const { name, quote } = request.body;
+  const { id } = request.params;
+
+  const { rows } = await client.query(
+    'UPDATE quotes set name = $1, quote = $2 WHERE id = $3 RETURNING *',
+    [name, quote, id]
+  );
+  response.send(rows);
+});
+
 app.delete('/api/delete/:id', async (request, response) => {
   console.log(request);
   const { id } = request.params;
