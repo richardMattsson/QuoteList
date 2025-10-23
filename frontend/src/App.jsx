@@ -7,18 +7,16 @@ function App() {
   const [name, setName] = useState('');
   const [quote, setQuote] = useState('');
   const [inProgress, setInProgress] = useState(null);
-  const [quoteDisplay, setQuoteOutput] = useState(null);
+  const [quoteDisplay, setQuoteDisplay] = useState(null);
   const [add, setAdd] = useState(false);
   // const [addUpdate, setAddUpdate] = useState(false);
 
   useEffect(() => {
     fetch('/api/quotes')
-      .then((response) => {
-        return response.json();
-      })
+      .then((response) => response.json())
       .then((result) => {
         setQuotes(result);
-        setQuoteOutput(result[0]);
+        setQuoteDisplay(result[0]);
       });
   }, []);
 
@@ -28,6 +26,7 @@ function App() {
     setName('');
     setQuote('');
     setAdd(false);
+    setQuoteDisplay(quote[0]);
   }
 
   function handleQuoteForm(e) {
@@ -71,7 +70,7 @@ function App() {
     const updatedArray = quotes.filter((quote) => quote.id !== id);
     setQuotes(updatedArray);
     setInProgress(null);
-    setQuoteOutput(null);
+    setQuoteDisplay(null);
   }
 
   // function sendUpdate(id) {
@@ -102,7 +101,7 @@ function App() {
                   padding: '0 10px',
                   cursor: 'pointer',
                 }}
-                onClick={() => setQuoteOutput(quote)}
+                onClick={() => setQuoteDisplay(quote)}
                 disabled={
                   quoteDisplay && quoteDisplay.id === quote.id ? true : false
                 }
