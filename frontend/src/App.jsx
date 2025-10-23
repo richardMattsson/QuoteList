@@ -7,6 +7,8 @@ function App() {
   const [name, setName] = useState('');
   const [quote, setQuote] = useState('');
   const [inProgress, setInProgress] = useState(null);
+  const [quoteOutput, setQuoteOutput] = useState(null);
+  const [add, setAdd] = useState(false);
 
   useEffect(() => {
     fetch('/api/quotes')
@@ -15,6 +17,7 @@ function App() {
       })
       .then((result) => {
         setQuotes(result);
+        setQuoteOutput(result[0]);
       });
   }, []);
 
@@ -23,12 +26,6 @@ function App() {
     setInProgress(null);
     setName('');
     setQuote('');
-  }
-
-  function deleteValue(id) {
-    const updatedArray = quotes.filter((quote) => quote.id !== id);
-    setQuotes(updatedArray);
-    setInProgress(null);
   }
 
   function handleQuoteForm(e) {
@@ -49,7 +46,6 @@ function App() {
   }
 
   function handleDelete(id) {
-    console.log(id);
     setInProgress(id);
     fetch(`/api/delete/${id}`, {
       method: 'DELETE',
@@ -62,53 +58,144 @@ function App() {
     });
   }
 
+  function deleteValue(id) {
+    const updatedArray = quotes.filter((quote) => quote.id !== id);
+    setQuotes(updatedArray);
+    setInProgress(null);
+    setQuoteOutput(null);
+  }
+
   return (
     <>
-      <h1>Famous quotes</h1>
-
-      <div className="card">
-        {quotes &&
-          quotes.map((quote) => (
-            <div key={quote.id}>
-              <p style={{ fontStyle: 'italic' }}>"{quote.quote}"</p>
-              <p>{quote.name}</p>
+      <div style={{ display: 'flex' }}>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          {quotes &&
+            quotes.map((quote) => (
               <button
-                disabled={inProgress === quote.id}
-                onClick={() => handleDelete(quote.id)}
+                key={quote.id}
+                className="button"
+                style={{
+                  border: '1px solid grey',
+                  borderRadius: '5px',
+                  textAlign: 'center',
+                  margin: '10px',
+                  padding: '0 10px',
+                  cursor: 'pointer',
+                }}
+                onClick={() => setQuoteOutput(quote)}
+                disabled={
+                  quoteOutput && quoteOutput.id === quote.id ? true : false
+                }
               >
-                {inProgress === quote.id ? (
-                  <div class="loader"></div>
-                ) : (
-                  'Delete'
-                )}
+                <p>{quote.name}</p>
               </button>
-            </div>
-          ))}
+            ))}
+        </div>
+
+        <div
+          style={{
+            display: 'flex',
+            flexGrow: 1,
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            // border: '1px solid #fff',
+          }}
+        >
+          <p style={{ fontStyle: 'italic', textAlign: 'center' }}>
+            {quoteOutput && `"${quoteOutput.quote}"`}
+          </p>
+          <p>{quoteOutput && quoteOutput.name}</p>
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'space-between',
+            alignContent: 'center',
+            alignItems: 'flex-end',
+          }}
+        >
+          <button
+            className="button"
+            onClick={() => setAdd(!add)}
+            style={{
+              border: '1px solid grey',
+              display: 'flex',
+              alignItems: 'center',
+              borderRadius: '5px',
+              textAlign: 'center',
+              margin: '10px',
+              cursor: 'pointer',
+            }}
+          >
+            {add ? 'Hide form' : 'Add new +'}
+          </button>
+          {quoteOutput && (
+            <button
+              className="button"
+              onClick={() => handleDelete(quoteOutput.id)}
+              style={{
+                border: '1px solid grey',
+                display: 'flex',
+                alignItems: 'center',
+                borderRadius: '5px',
+                textAlign: 'center',
+                margin: '10px',
+                cursor: 'pointer',
+              }}
+            >
+              {quoteOutput && inProgress === quoteOutput.id ? (
+                <div className="loader"></div>
+              ) : (
+                'Delete quote'
+              )}
+            </button>
+          )}
+        </div>
       </div>
 
-      <form
-        onSubmit={handleQuoteForm}
-        style={{ display: 'flex', flexDirection: 'column' }}
-      >
-        <input
-          onInput={(e) => setName(e.target.value)}
-          value={name}
-          type="text"
-          placeholder="Namn"
-        />
-        <textarea
-          onInput={(e) => setQuote(e.target.value)}
-          value={quote}
-          placeholder="Citat"
-        />
-        <button
-          onClick={() => setInProgress('add')}
-          type="submit"
-          style={{ display: 'flex', justifyContent: 'center' }}
+      <div className={add === true ? 'showForm' : 'hideForm'}>
+        <form
+          onSubmit={handleQuoteForm}
+          style={{ display: 'flex', flexDirection: 'column', width: '500px' }}
         >
-          {inProgress === 'add' ? <div class="loader"></div> : 'Lägg till'}
-        </button>
-      </form>
+          <input
+            onInput={(e) => setName(e.target.value)}
+            value={name}
+            type="text"
+            placeholder="Name"
+            style={{
+              textAlign: 'center',
+              padding: '10px',
+              fontFamily: 'sans-serif',
+            }}
+          />
+          <textarea
+            onInput={(e) => setQuote(e.target.value)}
+            value={quote}
+            cols={40}
+            rows={10}
+            placeholder="Quote"
+            style={{
+              textAlign: 'center',
+              padding: '10px',
+              fontFamily: 'sans-serif',
+            }}
+          />
+          <button
+            onClick={() => setInProgress('add')}
+            type="submit"
+            style={{ display: 'flex', justifyContent: 'center' }}
+          >
+            {inProgress === 'add' ? (
+              <div className="loader"></div>
+            ) : (
+              'Lägg till'
+            )}
+          </button>
+        </form>
+      </div>
     </>
   );
 }
