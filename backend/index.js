@@ -32,7 +32,7 @@ app.post('/api/post', async (request, response) => {
     'INSERT INTO quotes (name, quote) VALUES ($1, $2) RETURNING *',
     [name, quote]
   );
-  response.send(rows, response);
+  response.send(rows);
 });
 
 app.put('/api/put/:id', async (request, response) => {
