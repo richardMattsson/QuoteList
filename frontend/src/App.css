@@ -49,3 +49,41 @@
     animation: logo-spin infinite 20s linear;
   }
 }
+
+.flexContainer {
+  display: flex;
+  justify-content: space-around;
+}
+.flexSection {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  border: 1px solid grey;
+  padding: 1rem;
+}
+
+@media (max-width: 482px) {
+  button {
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 0.2em 0.6em;
+    font-size: 0.5em;
+    font-weight: 500;
+    font-family: inherit;
+    background-color: #1a1a1a;
+    cursor: pointer;
+    transition: border-color 0.25s;
+  }
+  .flexContainer {
+    flex-direction: column;
+  }
+  .flexSection {
+    width: 100%;
+    border: none;
+  }
+  #root {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0;
+  }
+}

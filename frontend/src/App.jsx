@@ -53,8 +53,7 @@ function App() {
       body: JSON.stringify(body),
     })
       .then((response) => {
-        // setDisplayBackendInformation(response);
-        console.log(response);
+        setDisplayBackendInformation(response);
         return response.json();
       })
       .then((result) => {
@@ -108,8 +107,7 @@ function App() {
   // }
   return (
     <>
-      <hr />
-      <div style={{ display: 'flex' }}>
+      <div style={{ display: 'flex', marginBottom: '2rem' }}>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           {quotes &&
             quotes.map((quote) => (
@@ -150,6 +148,8 @@ function App() {
               style={{
                 display: 'flex',
                 flexDirection: 'column',
+                // justifyContent: 'center',
+                // alignItems: 'center',
                 width: '500px',
               }}
             >
@@ -176,17 +176,23 @@ function App() {
                   fontFamily: 'sans-serif',
                 }}
               />
-              <button
-                onClick={() => setInProgress('add')}
-                type="submit"
-                style={{ display: 'flex', justifyContent: 'center' }}
-              >
-                {inProgress === 'add' ? (
-                  <div className="loader"></div>
-                ) : (
-                  'Lägg till'
-                )}
-              </button>
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <button
+                  onClick={() => setInProgress('add')}
+                  type="submit"
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    width: '200px',
+                  }}
+                >
+                  {inProgress === 'add' ? (
+                    <div className="loader"></div>
+                  ) : (
+                    'Lägg till'
+                  )}
+                </button>
+              </div>
             </form>
           </div>
           <div
@@ -275,19 +281,11 @@ function App() {
         db.
       </h2>
 
-      <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            width: '30%',
-            border: '1px solid grey',
-            padding: '1rem',
-          }}
-        >
-          <h2 style={{ textAlign: 'center', fontWeight: 500 }}>Frontend:</h2>
+      <div className="flexContainer">
+        <div className="flexSection">
+          <h2 style={{ textAlign: 'center', fontWeight: 500 }}>Frontend</h2>
 
-          {displayFrontendInformation ? (
+          {displayFrontendInformation && (
             <div>
               <h3 style={{ fontWeight: 600 }}>
                 Frontend skickar en request till backend. Vid POST eller
@@ -304,24 +302,11 @@ function App() {
                 </ul>
               ))}
             </div>
-          ) : (
-            <h3 style={{ fontWeight: 600 }}>
-              Ingen data skickas eller hämtas för tillfället, datan lever i
-              state.
-            </h3>
           )}
         </div>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            width: '30%',
-            border: '1px solid grey',
-            padding: '1rem',
-          }}
-        >
+        <div className="flexSection">
           <h2 style={{ textAlign: 'center', fontWeight: 500 }}>Backend</h2>
-          {displayBackendInformation ? (
+          {displayBackendInformation && (
             <>
               <h3 style={{ fontWeight: 600 }}>Backend svarar med:</h3>
               <p>{`Enpoint URL: ${displayBackendInformation.url}`}</p>
@@ -330,20 +315,9 @@ function App() {
                 ${displayBackendInformation.statusText}`}
               </p>
             </>
-          ) : (
-            <>{''}</>
           )}
         </div>
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            width: '30%',
-            border: '1px solid grey',
-            padding: '1rem',
-            alignItems: 'center',
-          }}
-        >
+        <div className="flexSection">
           <h2 style={{ textAlign: 'center', fontWeight: 500 }}>Db</h2>
           <h3 style={{ fontWeight: 600 }}>
             I databasen visas alla tillgängliga data.
