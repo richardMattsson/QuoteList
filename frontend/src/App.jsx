@@ -15,8 +15,6 @@ function App() {
     useState(null);
   const [displayDbInformation, setDisplayDbInformation] = useState(null);
 
-  // const [addUpdate, setAddUpdate] = useState(false);
-
   useEffect(() => {
     fetch('/api/quotes')
       .then((response) => {
@@ -326,10 +324,10 @@ function App() {
           {displayBackendInformation ? (
             <>
               <h3 style={{ fontWeight: 600 }}>Backend svarar med:</h3>
-              <p>`Enpoint URL: ${displayBackendInformation.url}`</p>
+              <p>{`Enpoint URL: ${displayBackendInformation.url}`}</p>
               <p>
-                `Statuskod: ${displayBackendInformation.status}, $
-                {displayBackendInformation.statusText}`
+                {`Statuskod: ${displayBackendInformation.status}, 
+                ${displayBackendInformation.statusText}`}
               </p>
             </>
           ) : (
