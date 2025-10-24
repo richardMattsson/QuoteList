@@ -25,19 +25,22 @@ app.get('/api/quotes', async (_request, response) => {
 });
 
 app.post('/api/post', async (request, response) => {
+  console.log(request.body);
   const { name, quote } = request.body;
   const { rows } = await client.query(
     'INSERT INTO quotes (name, quote) VALUES ($1, $2) RETURNING *',
     [name, quote]
   );
 
-  response.send(rows);
+  console.log(response.method);
+  console.log(response.url);
+  // console.log('body: ', response.body.name, response.body.name);
+  response.send(rows, response);
 });
 
 app.put('/api/put/:id', async (request, response) => {
   const { name, quote } = request.body;
   const { id } = request.params;
-
   const { rows } = await client.query(
     'UPDATE quotes set name = $1, quote = $2 WHERE id = $3 RETURNING *',
     [name, quote, id]

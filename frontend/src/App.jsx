@@ -4,27 +4,39 @@ import './App.css';
 
 function App() {
   const [quotes, setQuotes] = useState([]);
-  const [name, setName] = useState('');
-  const [quote, setQuote] = useState('');
+  const [nameInput, setNameInput] = useState('');
+  const [quoteInput, setQuoteInput] = useState('');
   const [inProgress, setInProgress] = useState(null);
   const [quoteDisplay, setQuoteDisplay] = useState(null);
   const [add, setAdd] = useState(false);
+  const [displayBackendInformation, setDisplayBackendInformation] =
+    useState(null);
+  const [displayFrontendInformation, setDisplayFrontendInformation] =
+    useState(null);
+  const [displayDbInformation, setDisplayDbInformation] = useState(null);
+
   // const [addUpdate, setAddUpdate] = useState(false);
 
   useEffect(() => {
     fetch('/api/quotes')
-      .then((response) => response.json())
+      .then((response) => {
+        setDisplayBackendInformation(response);
+        return response.json();
+      })
       .then((result) => {
         setQuotes(result);
         setQuoteDisplay(result[0]);
+        setDisplayFrontendInformation({ body: undefined, result: result });
+        setDisplayDbInformation(result);
       });
   }, []);
 
   function pushNewQuote(quote) {
     setQuotes([...quotes, quote[0]]);
+    setDisplayDbInformation([...quotes, quote[0]]);
     setInProgress(null);
-    setName('');
-    setQuote('');
+    setNameInput('');
+    setQuoteInput('');
     setAdd(false);
     setQuoteDisplay(quote[0]);
   }
@@ -32,8 +44,8 @@ function App() {
   function handleQuoteForm(e) {
     e.preventDefault();
     const body = {
-      name: name,
-      quote: quote,
+      name: nameInput,
+      quote: quoteInput,
     };
     fetch('/api/post', {
       method: 'POST',
@@ -42,8 +54,15 @@ function App() {
       },
       body: JSON.stringify(body),
     })
-      .then((response) => response.json())
-      .then((result) => pushNewQuote(result));
+      .then((response) => {
+        // setDisplayBackendInformation(response);
+        console.log(response);
+        return response.json();
+      })
+      .then((result) => {
+        setDisplayFrontendInformation({ body: body, result: result });
+        return pushNewQuote(result);
+      });
   }
 
   function handleDelete(id) {
@@ -58,7 +77,11 @@ function App() {
     fetch(`/api/delete/${id}`, {
       method: 'DELETE',
     }).then((response) => {
+      setDisplayBackendInformation(response);
+
+      console.log(response);
       if (response.ok) {
+        setDisplayFrontendInformation(null);
         deleteValue(id);
       } else {
         console.log(response);
@@ -69,6 +92,7 @@ function App() {
   function deleteValue(id) {
     const updatedArray = quotes.filter((quote) => quote.id !== id);
     setQuotes(updatedArray);
+    setDisplayDbInformation(updatedArray);
     setInProgress(null);
     setQuoteDisplay(null);
   }
@@ -86,6 +110,7 @@ function App() {
   // }
   return (
     <>
+      <hr />
       <div style={{ display: 'flex' }}>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           {quotes &&
@@ -131,8 +156,8 @@ function App() {
               }}
             >
               <input
-                onInput={(e) => setName(e.target.value)}
-                value={name}
+                onInput={(e) => setNameInput(e.target.value)}
+                value={nameInput}
                 type="text"
                 placeholder="Name"
                 style={{
@@ -142,8 +167,8 @@ function App() {
                 }}
               />
               <textarea
-                onInput={(e) => setQuote(e.target.value)}
-                value={quote}
+                onInput={(e) => setQuoteInput(e.target.value)}
+                value={quoteInput}
                 cols={20}
                 rows={7}
                 placeholder="Quote"
@@ -242,6 +267,110 @@ function App() {
               )}
             </button>
           )}
+        </div>
+      </div>
+
+      {/* Nedan en illustration av kommunikation mellan frontend, backend och db  */}
+      <hr />
+      <h2 style={{ textAlign: 'center', fontWeight: 500 }}>
+        Nedan en illustration över hur data skickas mellan frontend, backend och
+        db.
+      </h2>
+
+      <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            width: '30%',
+            border: '1px solid grey',
+            padding: '1rem',
+          }}
+        >
+          <h2 style={{ textAlign: 'center', fontWeight: 500 }}>Frontend:</h2>
+
+          {displayFrontendInformation ? (
+            <div>
+              <h3 style={{ fontWeight: 600 }}>
+                Frontend skickar en request till backend. Vid POST eller
+                PUT-anrop skickas body med. Resultatet visar vad som skickats
+                med från backend och databasen.
+              </h3>
+              <h3>Body:</h3>
+              <p>{JSON.stringify(displayFrontendInformation.body)}</p>
+              <h3>Resultat:</h3>
+              {displayFrontendInformation.result.map((item) => (
+                <ul key={item.id}>
+                  <li>{item.name}</li>
+                  <li>{item.quote}</li>
+                </ul>
+              ))}
+            </div>
+          ) : (
+            <h3 style={{ fontWeight: 600 }}>
+              Ingen data skickas eller hämtas för tillfället, datan lever i
+              state.
+            </h3>
+          )}
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            width: '30%',
+            border: '1px solid grey',
+            padding: '1rem',
+          }}
+        >
+          <h2 style={{ textAlign: 'center', fontWeight: 500 }}>Backend</h2>
+          {displayBackendInformation ? (
+            <>
+              <h3 style={{ fontWeight: 600 }}>Backend svarar med:</h3>
+              <p>`Enpoint URL: ${displayBackendInformation.url}`</p>
+              <p>
+                `Statuskod: ${displayBackendInformation.status}, $
+                {displayBackendInformation.statusText}`
+              </p>
+            </>
+          ) : (
+            <>{''}</>
+          )}
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            width: '30%',
+            border: '1px solid grey',
+            padding: '1rem',
+            alignItems: 'center',
+          }}
+        >
+          <h2 style={{ textAlign: 'center', fontWeight: 500 }}>Db</h2>
+          <h3 style={{ fontWeight: 600 }}>
+            I databasen visas alla tillgängliga data.
+          </h3>
+          <img
+            style={{ width: '150px' }}
+            src="../public/database-svgrepo-com.png"
+            alt=""
+          />
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+            }}
+          >
+            {displayDbInformation &&
+              displayDbInformation.map((item) => (
+                <ul key={item.id}>
+                  <li>id: {item.id}</li>
+                  <li>name: {item.name}</li>
+                  <li>quote: {item.quote}</li>
+                </ul>
+              ))}
+          </div>
         </div>
       </div>
     </>
