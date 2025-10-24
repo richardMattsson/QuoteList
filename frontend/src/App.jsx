@@ -350,7 +350,7 @@ function App() {
           </h3>
           <img
             style={{ width: '150px' }}
-            src="/frontend/public/database-svgrepo-com.png"
+            src="/database-svgrepo-com.png"
             alt=""
           />
           <div
