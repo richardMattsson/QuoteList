@@ -25,16 +25,11 @@ app.get('/api/quotes', async (_request, response) => {
 });
 
 app.post('/api/post', async (request, response) => {
-  console.log(request.body);
   const { name, quote } = request.body;
   const { rows } = await client.query(
     'INSERT INTO quotes (name, quote) VALUES ($1, $2) RETURNING *',
     [name, quote]
   );
-
-  console.log(response.method);
-  console.log(response.url);
-  // console.log('body: ', response.body.name, response.body.name);
   response.send(rows, response);
 });
 
@@ -49,7 +44,6 @@ app.put('/api/put/:id', async (request, response) => {
 });
 
 app.delete('/api/delete/:id', async (request, response) => {
-  console.log(request);
   const { id } = request.params;
   await client.query('DELETE FROM quotes WHERE id = $1;', [id]);
   response.send('Delete succesful');
