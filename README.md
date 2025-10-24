@@ -25,10 +25,10 @@ Monitorering
 
 Monitorering är ett sätt att övervaka och analysera sina webbtjänster.
 
-Genom statistik får man en överblick över hur olika processer inom webbtjänsten fungerar, hur saker laddar på sidan, om det uppstår fel osv. Man kan till exempel skapa ett flöde som man vill analysera, till exempel om en användare ska köpa en produkt, hur processerna flödar från punkt A till punkt B.
+Genom statistik får man en överblick över hur olika processer inom webbtjänsten fungerar, hur saker laddar på sidan, om det uppstår fel osv. Man kan analysera flöden och testa olika scenarion, till exempel hur det fungerar när en användare ska genomföra ett köp från punkt A till punkt B.
 
-Inom monitoreringstjänster finns det också funktioner som hjälper genom att skicka meddelanden om webbplatsen ligger nere eller om något annat inte fungerar som det ska. På detta sättet får man en bättre överblick och kontroll över sina webbtjänster, att de fungerar på önskvärt sätt.
+Inom monitoreringstjänster finns det också funktioner som kan skicka meddelanden om webbplatsen ligger nere eller om något annat inte fungerar som det ska. På det sättet får man en bättre överblick och kontroll över sina webbtjänster, att de fungerar på önskvärt sätt.
 
-Det kan vara bra för ett utvecklingsteam att ha som underlag när de ska utveckla webbtjänsten.
+Monitoreringstjänster kan vara ett bra verktyg för utvecklingsteam som underlag när de arbetar med att utveckla webbtjänsten.
 
-Exempel på monitoreringstjänster är Pingdom och Scout APM.
+Exempel på tjänster som erbjuder monitorering är Pingdom och Scout APM.

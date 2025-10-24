@@ -139,7 +139,6 @@ function App() {
             flexDirection: 'column',
             justifyContent: add ? 'space-between' : 'center',
             alignItems: 'center',
-            // border: '1px solid #fff',
           }}
         >
           <div className={add ? 'showForm' : 'hideForm'}>
@@ -148,8 +147,6 @@ function App() {
               style={{
                 display: 'flex',
                 flexDirection: 'column',
-                // justifyContent: 'center',
-                // alignItems: 'center',
                 width: '500px',
               }}
             >
@@ -221,15 +218,15 @@ function App() {
           <button
             className="button"
             onClick={() => setAdd(!add)}
-            style={{
-              border: '1px solid grey',
-              display: 'flex',
-              alignItems: 'center',
-              borderRadius: '5px',
-              textAlign: 'center',
-              margin: '10px',
-              cursor: 'pointer',
-            }}
+            // style={{
+            //   border: '1px solid grey',
+            //   display: 'flex',
+            //   alignItems: 'center',
+            //   borderRadius: '5px',
+            //   textAlign: 'center',
+            //   margin: '10px',
+            //   cursor: 'pointer',
+            // }}
           >
             {add ? 'Hide form' : 'Add new +'}
           </button>
@@ -254,15 +251,6 @@ function App() {
             <button
               className="button"
               onClick={() => handleDelete(quoteDisplay.id)}
-              style={{
-                border: '1px solid grey',
-                display: 'flex',
-                alignItems: 'center',
-                borderRadius: '5px',
-                textAlign: 'center',
-                margin: '10px',
-                cursor: 'pointer',
-              }}
             >
               {quoteDisplay && inProgress === quoteDisplay.id ? (
                 <div className="loader"></div>
@@ -277,71 +265,75 @@ function App() {
       {/* Nedan en illustration av kommunikation mellan frontend, backend och db  */}
       <hr />
       <h2 style={{ textAlign: 'center', fontWeight: 500 }}>
-        Nedan en illustration över hur data skickas mellan frontend, backend och
-        db.
+        Nedan en översikt av hur data skickas mellan frontend, backend och db.
       </h2>
 
       <div className="flexContainer">
         <div className="flexSection">
-          <h2 style={{ textAlign: 'center', fontWeight: 500 }}>Frontend</h2>
+          <div className="flexDiv">
+            <h2 style={{ textAlign: 'center', fontWeight: 500 }}>Frontend</h2>
 
-          {displayFrontendInformation && (
-            <div>
-              <h3 style={{ fontWeight: 600 }}>
-                Frontend skickar en request till backend. Vid POST eller
-                PUT-anrop skickas body med. Resultatet visar vad som skickats
-                med från backend och databasen.
-              </h3>
-              <h3>Body:</h3>
-              <p>{JSON.stringify(displayFrontendInformation.body)}</p>
-              <h3>Resultat:</h3>
-              {displayFrontendInformation.result.map((item) => (
-                <ul key={item.id}>
-                  <li>{item.name}</li>
-                  <li>{item.quote}</li>
-                </ul>
-              ))}
+            {displayFrontendInformation && (
+              <>
+                <h3 style={{ fontWeight: 600 }}>
+                  En request skickas till backend. POST och PUT-anrop innehåller
+                  en body. Resultatet visar mottagen data.
+                </h3>
+                <h3>Body:</h3>
+                <p>{JSON.stringify(displayFrontendInformation.body)}</p>
+                <h3>Resultat:</h3>
+                {displayFrontendInformation.result.map((item) => (
+                  <ul key={item.id}>
+                    <li>{item.name}</li>
+                    <li>{item.quote}</li>
+                  </ul>
+                ))}
+              </>
+            )}
+          </div>
+        </div>
+        <div className="flexSection">
+          <div className="flexDiv">
+            <h2 style={{ textAlign: 'center', fontWeight: 500 }}>Backend</h2>
+            {displayBackendInformation && (
+              <>
+                <h3 style={{ fontWeight: 600 }}>Backend svarar med:</h3>
+                <p>{`Enpoint URL: ${displayBackendInformation.url}`}</p>
+                <p>
+                  {`Statuskod: ${displayBackendInformation.status}, 
+                Status-text: ${displayBackendInformation.statusText}`}
+                </p>
+              </>
+            )}
+          </div>
+        </div>
+        <div className="flexSection">
+          <div className="flexDiv">
+            <h2 style={{ textAlign: 'center', fontWeight: 500 }}>Db</h2>
+            <h3 style={{ fontWeight: 600 }}>Visar lagrad data.</h3>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <img
+                style={{ width: '150px' }}
+                src="/database-svgrepo-com.png"
+                alt=""
+              />
             </div>
-          )}
-        </div>
-        <div className="flexSection">
-          <h2 style={{ textAlign: 'center', fontWeight: 500 }}>Backend</h2>
-          {displayBackendInformation && (
-            <>
-              <h3 style={{ fontWeight: 600 }}>Backend svarar med:</h3>
-              <p>{`Enpoint URL: ${displayBackendInformation.url}`}</p>
-              <p>
-                {`Statuskod: ${displayBackendInformation.status}, 
-                ${displayBackendInformation.statusText}`}
-              </p>
-            </>
-          )}
-        </div>
-        <div className="flexSection">
-          <h2 style={{ textAlign: 'center', fontWeight: 500 }}>Db</h2>
-          <h3 style={{ fontWeight: 600 }}>
-            I databasen visas alla tillgängliga data.
-          </h3>
-          <img
-            style={{ width: '150px' }}
-            src="/database-svgrepo-com.png"
-            alt=""
-          />
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'flex-start',
-            }}
-          >
-            {displayDbInformation &&
-              displayDbInformation.map((item) => (
-                <ul key={item.id}>
-                  <li>id: {item.id}</li>
-                  <li>name: {item.name}</li>
-                  <li>quote: {item.quote}</li>
-                </ul>
-              ))}
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+              }}
+            >
+              {displayDbInformation &&
+                displayDbInformation.map((item) => (
+                  <ul key={item.id}>
+                    <li>id: {item.id}</li>
+                    <li>name: {item.name}</li>
+                    <li>quote: {item.quote}</li>
+                  </ul>
+                ))}
+            </div>
           </div>
         </div>
       </div>
