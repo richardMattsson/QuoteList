@@ -36,7 +36,6 @@ app.post('/api/post', async (request, response) => {
 });
 
 app.put('/api/put/:id', async (request, response) => {
-  console.log('id: ', request.id);
   const { name, quote } = request.body;
   const { id } = request.params;
 

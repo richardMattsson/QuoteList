@@ -77,12 +77,11 @@ function App() {
     }).then((response) => {
       setDisplayBackendInformation(response);
 
-      console.log(response);
       if (response.ok) {
         setDisplayFrontendInformation(null);
         deleteValue(id);
       } else {
-        console.log(response);
+        console.log('error, response not ok. ', response);
       }
     });
   }
@@ -104,9 +103,15 @@ function App() {
       },
       body: JSON.stringify({ name: nameInput, quote: quoteInput }),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        setDisplayBackendInformation(response);
+        return response.json();
+      })
       .then((result) => {
-        console.log(result);
+        setDisplayFrontendInformation({
+          body: { name: nameInput, quote: quoteInput },
+          result: result,
+        });
         return handleUpdate(result);
       });
   }
@@ -255,7 +260,7 @@ function App() {
                     width: '200px',
                   }}
                 >
-                  {inProgress === 'add' ? (
+                  {inProgress === 'update' ? (
                     <div className="loader"></div>
                   ) : (
                     'Uppdatera'
@@ -288,27 +293,12 @@ function App() {
           }}
         >
           <button className="button" onClick={() => setAdd(!add)}>
-            {add ? 'Close form' : 'Add new +'}
+            {add ? 'Close form' : 'Add quote'}
           </button>
 
           <button className="button" onClick={() => setUpdate(!update)}>
             {update ? 'Close form' : 'Update quote'}
           </button>
-          {/* <button
-            className="button"
-            style={{
-              border: '1px solid grey',
-              display: 'flex',
-              alignItems: 'center',
-              borderRadius: '5px',
-              textAlign: 'center',
-              margin: '10px',
-              cursor: 'pointer',
-            }}
-            onClick={() => setAddUpdate(!addUpdate)}
-          >
-            {addUpdate ? 'Hide form' : 'Update quote'}
-          </button> */}
 
           {quoteDisplay && (
             <button

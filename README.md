@@ -2,7 +2,7 @@
 
 https://quotelist.onrender.com/
 
-### CDN
+## CDN
 
 Content Delivery Network (CDN) är en teknik där ett nätverk av servrar samarbetar för att skapa en effektiv och robust kommunikation inom ett nätverk.
 
@@ -17,9 +17,9 @@ Det minskar kostnader för leverantörer då de inte behöver betala för lika m
 
 Det minskar avståndet mellan server och användare och minksar överföringstiden. Användaren upplever att webbtjänsten svarar snabbare.
 
-Exempel på tjänster som erbjuder CDN är Cloudfare.
+En tjänst som erbjuder CDN är till exempel Cloudfare.
 
-### Monitorering
+## Monitorering
 
 Monitorering är ett sätt att övervaka och analysera sina webbtjänster.
 

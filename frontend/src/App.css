@@ -23,8 +23,8 @@
 }
 
 .loader {
-  border: 4px solid #f3f3f3; /* Light grey */
-  border-top: 4px solid #3498db; /* Blue */
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #3498db;
   border-radius: 50%;
   width: 15px;
   height: 15px;
@@ -79,14 +79,12 @@ button:focus-visible {
   display: flex;
   justify-content: space-around;
   width: 100%;
-  /* border: 1px solid grey; */
 }
 .flexSection {
   display: flex;
   flex-direction: column;
   width: 30%;
   border: 1px solid grey;
-  /* padding: 1rem; */
 }
 .flexDiv {
   padding: 1rem;
@@ -105,16 +103,12 @@ button:focus-visible {
   }
   .flexContainer {
     flex-direction: column;
-    /* border: 1px solid grey; */
   }
   .flexSection {
     width: 100%;
     border: none;
-    /* padding: 1rem; */
-    /* border: 1px solid grey; */
   }
   .flexDiv {
-    /* width: 80%; */
     padding: 1rem;
   }
   .showForm {
