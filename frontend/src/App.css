@@ -60,6 +60,14 @@ button:focus-visible {
   display: flex;
   justify-content: center;
 }
+.hideUpdate {
+  display: none;
+}
+
+.showUpdate {
+  display: flex;
+  justify-content: center;
+}
 
 @media (prefers-reduced-motion: no-preference) {
   a:nth-of-type(2) .logo {

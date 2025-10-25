@@ -9,6 +9,7 @@ function App() {
   const [inProgress, setInProgress] = useState(null);
   const [quoteDisplay, setQuoteDisplay] = useState(null);
   const [add, setAdd] = useState(false);
+  const [update, setUpdate] = useState(false);
   const [displayBackendInformation, setDisplayBackendInformation] =
     useState(null);
   const [displayFrontendInformation, setDisplayFrontendInformation] =
@@ -94,17 +95,37 @@ function App() {
     setQuoteDisplay(null);
   }
 
-  // function sendUpdate(id) {
-  //   fetch(`/api/post/${id}`, {
-  //     method: 'PUT',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({ name: name, quote: quote }),
-  //   })
-  //     .then((response) => response.json())
-  //     .then((result) => console.log(result));
-  // }
+  function sendUpdate(e) {
+    e.preventDefault();
+    fetch(`/api/put/${quoteDisplay.id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name: nameInput, quote: quoteInput }),
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+        return handleUpdate(result);
+      });
+  }
+
+  function handleUpdate(result) {
+    setNameInput('');
+    setQuoteInput('');
+    setUpdate(false);
+    setInProgress(null);
+
+    setQuoteDisplay(result[0]);
+    const updatedQuotes = quotes.map((quote) => {
+      if (quote.id === result[0].id) {
+        return result[0];
+      }
+      return quote;
+    });
+    setQuotes(updatedQuotes);
+  }
   return (
     <>
       <div style={{ display: 'flex', marginBottom: '2rem' }}>
@@ -192,6 +213,57 @@ function App() {
               </div>
             </form>
           </div>
+          <div className={update ? 'showUpdate' : 'hideUpdate'}>
+            <form
+              onSubmit={sendUpdate}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                width: '500px',
+              }}
+            >
+              <input
+                onInput={(e) => setNameInput(e.target.value)}
+                value={nameInput}
+                type="text"
+                placeholder={quoteDisplay ? quoteDisplay.name : 'name'}
+                style={{
+                  textAlign: 'center',
+                  padding: '10px',
+                  fontFamily: 'sans-serif',
+                }}
+              />
+              <textarea
+                onInput={(e) => setQuoteInput(e.target.value)}
+                value={quoteInput}
+                cols={20}
+                rows={7}
+                placeholder={quoteDisplay ? quoteDisplay.quote : 'quote'}
+                style={{
+                  textAlign: 'center',
+                  padding: '10px',
+                  fontFamily: 'sans-serif',
+                }}
+              />
+              <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <button
+                  onClick={() => setInProgress('update')}
+                  type="submit"
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    width: '200px',
+                  }}
+                >
+                  {inProgress === 'add' ? (
+                    <div className="loader"></div>
+                  ) : (
+                    'Uppdatera'
+                  )}
+                </button>
+              </div>
+            </form>
+          </div>
           <div
             style={{
               display: 'flex',
@@ -215,22 +287,13 @@ function App() {
             alignItems: 'flex-end',
           }}
         >
-          <button
-            className="button"
-            onClick={() => setAdd(!add)}
-            // style={{
-            //   border: '1px solid grey',
-            //   display: 'flex',
-            //   alignItems: 'center',
-            //   borderRadius: '5px',
-            //   textAlign: 'center',
-            //   margin: '10px',
-            //   cursor: 'pointer',
-            // }}
-          >
-            {add ? 'Hide form' : 'Add new +'}
+          <button className="button" onClick={() => setAdd(!add)}>
+            {add ? 'Close form' : 'Add new +'}
           </button>
 
+          <button className="button" onClick={() => setUpdate(!update)}>
+            {update ? 'Close form' : 'Update quote'}
+          </button>
           {/* <button
             className="button"
             style={{
