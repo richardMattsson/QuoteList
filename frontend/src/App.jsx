@@ -130,6 +130,7 @@ function App() {
       return quote;
     });
     setQuotes(updatedQuotes);
+    setDisplayDbInformation(updatedQuotes);
   }
   return (
     <>
