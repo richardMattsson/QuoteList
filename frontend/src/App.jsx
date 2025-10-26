@@ -297,9 +297,11 @@ function App() {
             {add ? 'Close form' : 'Add quote'}
           </button>
 
-          <button className="button" onClick={() => setUpdate(!update)}>
-            {update ? 'Close form' : 'Update quote'}
-          </button>
+          {quoteDisplay && (
+            <button className="button" onClick={() => setUpdate(!update)}>
+              {update ? 'Close form' : 'Update quote'}
+            </button>
+          )}
 
           {quoteDisplay && (
             <button
