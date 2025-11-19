@@ -2,11 +2,15 @@ import { QuoteType } from "../../lib/type";
 
 type QuoteButtonsProps = {
   quotes: QuoteType[] | null;
-  setQuote: (quote: QuoteType) => void;
   quoteDisplay: QuoteType | null;
+  setQuoteDisplay: React.Dispatch<React.SetStateAction<QuoteType | null>>;
 };
 
-function QuoteButtons({ quotes, quoteDisplay, setQuote }: QuoteButtonsProps) {
+function QuoteButtons({
+  quotes,
+  quoteDisplay,
+  setQuoteDisplay,
+}: QuoteButtonsProps) {
   return (
     <div
       style={{
@@ -28,7 +32,7 @@ function QuoteButtons({ quotes, quoteDisplay, setQuote }: QuoteButtonsProps) {
               padding: "0 10px",
               cursor: "pointer",
             }}
-            onClick={() => setQuote(quote)}
+            onClick={() => setQuoteDisplay(quote)}
             disabled={
               quoteDisplay && quoteDisplay.id === quote.id ? true : false
             }

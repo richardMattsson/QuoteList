@@ -24,9 +24,7 @@ function QuoteSection({
     name: "",
     quote: "",
   });
-  const [inProgress, setInProgress] = useState<
-    number | string | boolean | null
-  >(null);
+  const [inProgress, setInProgress] = useState<number | boolean | null>(null);
   const [formButton, setFormButton] = useState<FormButtonType>({
     add: false,
     update: false,
@@ -45,7 +43,7 @@ function QuoteSection({
       .then((response) => {
         return response.json();
       })
-      .then((result) => {
+      .then((result: QuoteType[]) => {
         setInProgress(null);
         setForm({ name: "", quote: "" });
         setFormButton({ ...formButton, add: false });
@@ -63,7 +61,6 @@ function QuoteSection({
   };
   function sendUpdate(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log(e.target);
 
     fetch(`/api/put/${quoteDisplay?.id}`, {
       method: "PUT",
@@ -75,7 +72,7 @@ function QuoteSection({
       .then((response) => {
         return response.json();
       })
-      .then((result) => {
+      .then((result: QuoteType[]) => {
         setForm({ name: "", quote: "" });
         setFormButton({ ...formButton, update: false });
         setInProgress(null);

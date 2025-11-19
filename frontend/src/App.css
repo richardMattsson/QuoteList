@@ -4,6 +4,29 @@
   padding: 2rem;
 }
 
+.Home-article {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 15px;
+  padding: 15px;
+  justify-content: center;
+}
+
+.BookCard-container {
+  width: 250px;
+  border: 1px solid white;
+  border-radius: 15px;
+  padding: 15px;
+}
+.bookcard-header {
+  cursor: pointer;
+}
+.bookcard-header:hover {
+  color: #3498db;
+}
+.hideElement {
+  display: none;
+}
 button {
   border-radius: 8px;
   border: 1px solid grey;

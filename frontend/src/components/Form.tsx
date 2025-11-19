@@ -1,5 +1,4 @@
 import { FormType } from "../../lib/type";
-
 import { FormButtonType } from "../../lib/type";
 
 type FormProps = {
@@ -10,10 +9,8 @@ type FormProps = {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => void;
   form: FormType;
-  setInProgress: React.Dispatch<
-    React.SetStateAction<string | number | boolean | null>
-  >;
-  inProgress: string | number | boolean | null;
+  setInProgress: React.Dispatch<React.SetStateAction<number | boolean | null>>;
+  inProgress: number | boolean | null;
   addText: string;
 };
 

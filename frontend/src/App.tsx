@@ -5,6 +5,7 @@ import QuoteButtons from "./components/QuoteButtons";
 import QuoteSection from "./components/QuoteSection";
 
 import { QuoteType } from "../lib/type";
+import Books from "./components/Books";
 
 function App() {
   const [quotes, setQuotes] = useState<QuoteType[] | null>(null);
@@ -15,22 +16,18 @@ function App() {
       .then((response) => {
         return response.json();
       })
-      .then((result) => {
+      .then((result: QuoteType[]) => {
         setQuotes(result);
         setQuoteDisplay(result[0]);
       });
   }, []);
-
-  const setQuote = (quote: QuoteType) => {
-    setQuoteDisplay(quote);
-  };
 
   return (
     <>
       <div style={{ display: "flex", marginBottom: "2rem" }}>
         <QuoteButtons
           quotes={quotes}
-          setQuote={setQuote}
+          setQuoteDisplay={setQuoteDisplay}
           quoteDisplay={quoteDisplay}
         />
         <QuoteSection
@@ -40,6 +37,7 @@ function App() {
           quoteDisplay={quoteDisplay}
         />
       </div>
+      <Books />
     </>
   );
 }

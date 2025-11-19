@@ -5,7 +5,7 @@ type InputButtonsProps = {
   formButton: FormButtonType;
   quoteDisplay: QuoteType | null;
   setFormButton: React.Dispatch<React.SetStateAction<FormButtonType>>;
-  inProgress: string | number | boolean | null;
+  inProgress: number | boolean | null;
   handleDelete: () => void;
 };
 
@@ -48,25 +48,21 @@ function InputButtons({
         {formButton.add ? "Close form" : "Add quote"}
       </button>
 
-      {quoteDisplay && (
-        <button
-          className={formButton.update ? "buttonFocus" : "button"}
-          accessKey="update"
-          onClick={handleClick}
-        >
-          {formButton.update ? "Close form" : "Update quote"}
-        </button>
-      )}
+      <button
+        className={formButton.update ? "buttonFocus" : "button"}
+        accessKey="update"
+        onClick={handleClick}
+      >
+        {formButton.update ? "Close form" : "Update quote"}
+      </button>
 
-      {quoteDisplay && (
-        <button className="button" onClick={handleDelete}>
-          {quoteDisplay && inProgress === quoteDisplay.id ? (
-            <div className="loader"></div>
-          ) : (
-            "Delete quote"
-          )}
-        </button>
-      )}
+      <button className="button" onClick={handleDelete}>
+        {quoteDisplay && inProgress === quoteDisplay.id ? (
+          <div className="loader"></div>
+        ) : (
+          "Delete quote"
+        )}
+      </button>
     </div>
   );
 }
