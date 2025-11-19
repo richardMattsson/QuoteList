@@ -18,6 +18,12 @@
   border-radius: 15px;
   padding: 15px;
 }
+.Bookdetail-container {
+  width: 600px;
+  border: 1px solid white;
+  border-radius: 15px;
+  padding: 15px;
+}
 .bookcard-header {
   cursor: pointer;
 }

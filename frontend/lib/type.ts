@@ -19,5 +19,7 @@ export type BooksType = {
     imageLinks: {
       smallThumbnail: string;
     };
+    publishedDate: string;
+    description: string;
   };
 };

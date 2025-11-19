@@ -2,22 +2,11 @@ import { useState } from "react";
 import BookCard from "./BookCard";
 import { BooksType } from "../../lib/type";
 
-type BookDetailsType = {
-  id: string;
-  volumeInfo: {
-    title: string;
-    authors: [string];
-    imageLinks: {
-      smallThumbnail: string;
-    };
-  };
-};
-
 function Books() {
   const [inputValue, setInputValue] = useState("");
   const [books, setBooks] = useState<BooksType[] | null>(null);
   const [showResult, setShowResult] = useState<boolean>(true);
-  const [bookDetails, setBookDetails] = useState<BookDetailsType | null>(null);
+  const [bookDetails, setBookDetails] = useState<BooksType | null>(null);
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -56,11 +45,17 @@ function Books() {
               volumeInfo={book.volumeInfo}
               setShowResult={setShowResult}
               setBookDetails={setBookDetails}
+              showResult={showResult}
             />
           ))}
       </article>
       {bookDetails && (
-        <BookCard id={bookDetails.id} volumeInfo={bookDetails.volumeInfo} />
+        <BookCard
+          id={bookDetails.id}
+          volumeInfo={bookDetails.volumeInfo}
+          showResult={showResult}
+          setShowResult={setShowResult}
+        />
       )}
     </>
   );
