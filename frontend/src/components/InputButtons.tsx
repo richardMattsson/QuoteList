@@ -1,19 +1,11 @@
-type QuotesType = {
-  id: number;
-  name: string;
-  quote: string;
-};
+import { QuoteType } from "../../lib/type";
+import { FormButtonType } from "../../lib/type";
 
-type FormButtonType = {
-  add: boolean;
-  update: boolean;
-};
-
-type InputButtonsType = {
+type InputButtonsProps = {
   formButton: FormButtonType;
-  quoteDisplay: QuotesType | null;
+  quoteDisplay: QuoteType | null;
   setFormButton: React.Dispatch<React.SetStateAction<FormButtonType>>;
-  inProgress: string | number | null;
+  inProgress: string | number | boolean | null;
   handleDelete: () => void;
 };
 
@@ -23,13 +15,17 @@ function InputButtons({
   quoteDisplay,
   inProgress,
   handleDelete,
-}: InputButtonsType) {
+}: InputButtonsProps) {
   const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (e.currentTarget.accessKey === "add") {
-      setFormButton({ ...formButton, add: !formButton.add });
+      formButton.update
+        ? setFormButton({ add: !formButton.add, update: false })
+        : setFormButton({ ...formButton, add: !formButton.add });
     }
     if (e.currentTarget.accessKey === "update") {
-      setFormButton({ ...formButton, update: !formButton.update });
+      formButton.add
+        ? setFormButton({ add: false, update: !formButton.update })
+        : setFormButton({ ...formButton, update: !formButton.update });
     }
   };
 
@@ -44,12 +40,20 @@ function InputButtons({
         border: "1px solid white",
       }}
     >
-      <button className="button" accessKey="add" onClick={handleClick}>
+      <button
+        className={formButton.add ? "buttonFocus" : "button"}
+        accessKey="add"
+        onClick={handleClick}
+      >
         {formButton.add ? "Close form" : "Add quote"}
       </button>
 
       {quoteDisplay && (
-        <button className="button" accessKey="update" onClick={handleClick}>
+        <button
+          className={formButton.update ? "buttonFocus" : "button"}
+          accessKey="update"
+          onClick={handleClick}
+        >
           {formButton.update ? "Close form" : "Update quote"}
         </button>
       )}

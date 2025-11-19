@@ -1,16 +1,9 @@
-import { useState, useEffect } from "react";
-import "../App.css";
-
-type QuotesType = {
-  id: number;
-  name: string;
-  quote: string;
-};
+import { QuoteType } from "../../lib/type";
 
 type QuoteButtonsProps = {
-  quotes: QuotesType[] | null;
-  setQuote: (quote: QuotesType) => void;
-  quoteDisplay: QuotesType | null;
+  quotes: QuoteType[] | null;
+  setQuote: (quote: QuoteType) => void;
+  quoteDisplay: QuoteType | null;
 };
 
 function QuoteButtons({ quotes, quoteDisplay, setQuote }: QuoteButtonsProps) {

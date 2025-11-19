@@ -1,14 +1,10 @@
-type QuoteType = {
-  id: number;
-  name: string;
-  quote: string;
-};
+import { QuoteType } from "../../lib/type";
 
-type DisplayQuoteType = {
+type DisplayQuoteProps = {
   quoteDisplay: QuoteType | null;
 };
 
-function DisplayQuote({ quoteDisplay }: DisplayQuoteType) {
+function DisplayQuote({ quoteDisplay }: DisplayQuoteProps) {
   return (
     <div
       style={{

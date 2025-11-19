@@ -4,11 +4,7 @@ import "./App.css";
 import QuoteButtons from "./components/QuoteButtons";
 import QuoteSection from "./components/QuoteSection";
 
-type QuoteType = {
-  id: number;
-  name: string;
-  quote: string;
-};
+import { QuoteType } from "../lib/type";
 
 function App() {
   const [quotes, setQuotes] = useState<QuoteType[] | null>(null);
@@ -38,10 +34,10 @@ function App() {
           quoteDisplay={quoteDisplay}
         />
         <QuoteSection
+          quotes={quotes}
           setQuotes={setQuotes}
           setQuoteDisplay={setQuoteDisplay}
           quoteDisplay={quoteDisplay}
-          quotes={quotes}
         />
       </div>
     </>
