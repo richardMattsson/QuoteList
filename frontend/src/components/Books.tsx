@@ -2,12 +2,26 @@ import { useState } from "react";
 import BookCard from "./BookCard";
 import { BooksType } from "../../lib/type";
 
+type BookDetailsType = {
+  id: string;
+  volumeInfo: {
+    title: string;
+    authors: [string];
+    imageLinks: {
+      smallThumbnail: string;
+    };
+  };
+};
+
 function Books() {
   const [inputValue, setInputValue] = useState("");
   const [books, setBooks] = useState<BooksType[] | null>(null);
+  const [showResult, setShowResult] = useState<boolean>(true);
+  const [bookDetails, setBookDetails] = useState<BookDetailsType | null>(null);
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    setShowResult(true);
 
     fetch(`https://www.googleapis.com/books/v1/volumes?q=${inputValue}`)
       .then((response) => response.json())
@@ -33,12 +47,21 @@ function Books() {
         </form>
       </section>
 
-      <article className="Home-article">
+      <article className={showResult ? "Home-article" : "hideElement"}>
         {books &&
           books.map((book) => (
-            <BookCard key={book.id} id={book.id} volumeInfo={book.volumeInfo} />
+            <BookCard
+              key={book.id}
+              id={book.id}
+              volumeInfo={book.volumeInfo}
+              setShowResult={setShowResult}
+              setBookDetails={setBookDetails}
+            />
           ))}
       </article>
+      {bookDetails && (
+        <BookCard id={bookDetails.id} volumeInfo={bookDetails.volumeInfo} />
+      )}
     </>
   );
 }

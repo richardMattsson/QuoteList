@@ -1,8 +1,34 @@
 import { useState } from "react";
 import { BooksType } from "../../lib/type";
 
-function BookCard({ id, volumeInfo }: BooksType) {
-  function handleClick() {}
+type BookCardProps = {
+  setShowResult?: React.Dispatch<React.SetStateAction<boolean>>;
+  setBookDetails?: React.Dispatch<React.SetStateAction<BooksType | null>>;
+};
+
+function BookCard({
+  id,
+  volumeInfo,
+  setShowResult,
+  setBookDetails,
+}: BookCardProps & BooksType) {
+  function handleClick() {
+    if (setShowResult) {
+      setShowResult(false);
+    }
+    if (setBookDetails) {
+      setBookDetails({
+        id: id,
+        volumeInfo: {
+          title: volumeInfo.title,
+          authors: [volumeInfo.authors[0]],
+          imageLinks: {
+            smallThumbnail: volumeInfo.imageLinks.smallThumbnail,
+          },
+        },
+      });
+    }
+  }
   return (
     <section aria-labelledby="book-heading" className="BookCard-container">
       <h2 id="book-heading" className="bookcard-header" onClick={handleClick}>
