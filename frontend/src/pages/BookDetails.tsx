@@ -15,6 +15,16 @@ function BookDetails() {
       });
   }, [id]);
 
-  return <>{book && <BookCard id={book.id} volumeInfo={book.volumeInfo} />}</>;
+  return (
+    <>
+      {book && (
+        <BookCard
+          id={book.id}
+          volumeInfo={book.volumeInfo}
+          showDetails={true}
+        />
+      )}
+    </>
+  );
 }
 export default BookDetails;

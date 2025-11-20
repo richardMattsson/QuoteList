@@ -5,12 +5,10 @@ import type { BooksType } from "../../lib/type";
 function Books() {
   const [inputValue, setInputValue] = useState("");
   const [books, setBooks] = useState<BooksType[] | null>(null);
-  const [showResult, setShowResult] = useState<boolean>(true);
-  const [bookDetails, setBookDetails] = useState<BooksType | null>(null);
+  const [showDetails, setShowDetails] = useState(false);
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setShowResult(true);
 
     fetch(`https://www.googleapis.com/books/v1/volumes?q=${inputValue}`)
       .then((response) => response.json())
@@ -39,27 +37,18 @@ function Books() {
         </form>
       </section>
 
-      <article className={showResult ? "Home-article" : "hideElement"}>
+      <article className={"Home-article"}>
         {books &&
           books.map((book) => (
             <BookCard
               key={book.id}
               id={book.id}
               volumeInfo={book.volumeInfo}
-              setShowResult={setShowResult}
-              setBookDetails={setBookDetails}
-              showResult={showResult}
+              showDetails={showDetails}
+              setShowDetails={setShowDetails}
             />
           ))}
       </article>
-      {bookDetails && (
-        <BookCard
-          id={bookDetails.id}
-          volumeInfo={bookDetails.volumeInfo}
-          showResult={showResult}
-          setShowResult={setShowResult}
-        />
-      )}
     </>
   );
 }
