@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import QuoteButtons from "../components/QuoteButtons";
 import QuoteSection from "../components/QuoteSection";
 
-import { QuoteType } from "../../lib/type";
+import type { QuoteType } from "../../lib/type";
 import Books from "../components/Books";
 
 function Home() {

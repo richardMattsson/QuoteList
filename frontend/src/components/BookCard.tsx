@@ -1,9 +1,10 @@
-import { BooksType } from "../../lib/type";
+import { useNavigate } from "react-router-dom";
+import type { BooksType } from "../../lib/type";
 
 type BookCardProps = {
-  setShowResult: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowResult?: React.Dispatch<React.SetStateAction<boolean>>;
   setBookDetails?: React.Dispatch<React.SetStateAction<BooksType | null>>;
-  showResult: boolean;
+  showResult?: boolean;
 };
 
 function BookCard({
@@ -13,6 +14,8 @@ function BookCard({
   setBookDetails,
   showResult,
 }: BookCardProps & BooksType) {
+  const navigate = useNavigate();
+
   function handleClick() {
     if (setShowResult) {
       setShowResult(false);
@@ -32,6 +35,7 @@ function BookCard({
         },
       });
     }
+    navigate(`/bookDetails/${id}`);
   }
   return (
     <section

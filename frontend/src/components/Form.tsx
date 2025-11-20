@@ -1,5 +1,5 @@
-import { FormType } from "../../lib/type";
-import { FormButtonType } from "../../lib/type";
+import type { FormType } from "../../lib/type";
+import type { FormButtonType } from "../../lib/type";
 
 type FormProps = {
   formButton: FormButtonType;

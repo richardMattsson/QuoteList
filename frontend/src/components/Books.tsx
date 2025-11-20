@@ -1,6 +1,6 @@
 import { useState } from "react";
 import BookCard from "./BookCard";
-import { BooksType } from "../../lib/type";
+import type { BooksType } from "../../lib/type";
 
 function Books() {
   const [inputValue, setInputValue] = useState("");

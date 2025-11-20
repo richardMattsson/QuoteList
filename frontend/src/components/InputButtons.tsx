@@ -1,5 +1,5 @@
-import { QuoteType } from "../../lib/type";
-import { FormButtonType } from "../../lib/type";
+import type { QuoteType } from "../../lib/type";
+import type { FormButtonType } from "../../lib/type";
 
 type InputButtonsProps = {
   formButton: FormButtonType;

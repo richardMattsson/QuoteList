@@ -1,4 +1,4 @@
-import { QuoteType } from "../../lib/type";
+import type { QuoteType } from "../../lib/type";
 
 type QuoteButtonsProps = {
   quotes: QuoteType[] | null;

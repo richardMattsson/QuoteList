@@ -3,9 +3,9 @@ import InputButtons from "./InputButtons";
 import DisplayQuote from "./DisplayQuote";
 import Form from "./Form";
 
-import { QuoteType } from "../../lib/type";
-import { FormType } from "../../lib/type";
-import { FormButtonType } from "../../lib/type";
+import type { QuoteType } from "../../lib/type";
+import type { FormType } from "../../lib/type";
+import type { FormButtonType } from "../../lib/type";
 
 type QuoteSectionProps = {
   setQuotes: React.Dispatch<React.SetStateAction<QuoteType[] | null>>;
