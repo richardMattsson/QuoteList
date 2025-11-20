@@ -4,6 +4,26 @@
   padding: 2rem;
 }
 
+.Home-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  /* border: 1px solid white; */
+}
+
+.Home-h1 {
+  text-align: center;
+  font-size: 32px;
+}
+
+.Home-form {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 15px;
+
+  /* border: 1px solid white; */
+}
+
 .Home-article {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -14,13 +34,14 @@
 
 .BookCard-container {
   width: 250px;
-  border: 1px solid white;
+  border: 3px solid #094e7c;
   border-radius: 15px;
   padding: 15px;
 }
 .Bookdetail-container {
   width: 600px;
-  border: 1px solid white;
+  /* border: 3px solid #094e7c; */
+
   border-radius: 15px;
   padding: 15px;
 }
@@ -34,6 +55,7 @@
   display: none;
 }
 button {
+  min-width: 150px;
   border-radius: 8px;
   border: 1px solid grey;
   padding: 1em 1em;
@@ -59,6 +81,17 @@ button:focus-visible {
 
 .button:hover {
   background-color: rgba(138, 134, 134, 0.281);
+}
+
+.flexContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+#input-buttons-div {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .hideForm {

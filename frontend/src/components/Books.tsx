@@ -26,13 +26,16 @@ function Books() {
         </h1>
         <form onSubmit={handleSubmit} className="Home-form">
           <input
+            style={{ fontSize: "20px" }}
             type="text"
             onChange={(e) => setInputValue(e.target.value)}
             value={inputValue}
             className="Home-input"
           />
 
-          <button type="submit">Sök</button>
+          <button type="submit" style={{ width: "100px" }}>
+            Sök
+          </button>
         </form>
       </section>
 

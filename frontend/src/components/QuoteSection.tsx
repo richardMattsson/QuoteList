@@ -44,13 +44,14 @@ function QuoteSection({
         return response.json();
       })
       .then((result: QuoteType[]) => {
+        setQuotes((prev) => [...(prev || []), result[0]]);
+        setQuoteDisplay(result[0]);
         setInProgress(null);
         setForm({ name: "", quote: "" });
         setFormButton({ ...formButton, add: false });
-        setQuotes((prev) => [...(prev || []), result[0]]);
-        setQuoteDisplay(result[0]);
       });
   }
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
@@ -59,6 +60,7 @@ function QuoteSection({
       [e.target.name]: e.target.value,
     });
   };
+
   function sendUpdate(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
@@ -125,7 +127,7 @@ function QuoteSection({
           justifyContent:
             formButton.add || formButton.update ? "space-between" : "center",
           alignItems: "center",
-          border: "1px solid white",
+          // border: "1px solid white",
         }}
       >
         <div className={formButton.add ? "showForm" : "hideForm"}>

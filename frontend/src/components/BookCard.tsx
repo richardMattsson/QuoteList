@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { BooksType } from "../../lib/type";
 
 type BookCardProps = {
@@ -29,6 +28,7 @@ function BookCard({
           },
           publishedDate: volumeInfo.publishedDate,
           description: volumeInfo.description,
+          previewLink: volumeInfo.previewLink,
         },
       });
     }
@@ -70,6 +70,9 @@ function BookCard({
               Beskrivning:
             </h4>
             <p>{volumeInfo.description && volumeInfo.description}</p>
+            <a href={volumeInfo.previewLink} target="_blank">
+              {volumeInfo.previewLink}
+            </a>
             {setShowResult && (
               <button onClick={() => setShowResult(true)}> Tillbaka</button>
             )}

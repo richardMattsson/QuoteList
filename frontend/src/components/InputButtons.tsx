@@ -30,22 +30,13 @@ function InputButtons({
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        alignContent: "center",
-        alignItems: "flex-end",
-        border: "1px solid white",
-      }}
-    >
+    <div id="input-buttons-div">
       <button
         className={formButton.add ? "buttonFocus" : "button"}
         accessKey="add"
         onClick={handleClick}
       >
-        {formButton.add ? "Close form" : "Add quote"}
+        {formButton.add ? "Stäng formulär" : "Lägg till citat"}
       </button>
 
       <button
@@ -53,14 +44,14 @@ function InputButtons({
         accessKey="update"
         onClick={handleClick}
       >
-        {formButton.update ? "Close form" : "Update quote"}
+        {formButton.update ? "Stäng formulär" : "Uppdatera citat"}
       </button>
 
       <button className="button" onClick={handleDelete}>
         {quoteDisplay && inProgress === quoteDisplay.id ? (
           <div className="loader"></div>
         ) : (
-          "Delete quote"
+          "Radera citat"
         )}
       </button>
     </div>

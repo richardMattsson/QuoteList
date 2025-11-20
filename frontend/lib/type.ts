@@ -21,5 +21,6 @@ export type BooksType = {
     };
     publishedDate: string;
     description: string;
+    previewLink: string;
   };
 };

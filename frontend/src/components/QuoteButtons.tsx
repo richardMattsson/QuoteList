@@ -16,7 +16,7 @@ function QuoteButtons({
       style={{
         display: "flex",
         flexDirection: "column",
-        border: "1px solid white",
+        // border: "1px solid white",
       }}
     >
       {quotes &&
