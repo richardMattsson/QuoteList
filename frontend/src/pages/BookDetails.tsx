@@ -8,11 +8,18 @@ function BookDetails() {
   const { id } = useParams();
 
   useEffect(() => {
-    fetch(`https://www.googleapis.com/books/v1/volumes/${id}`)
-      .then((response) => response.json())
-      .then((result) => {
-        setBook(result);
-      });
+    const fetchBook = async () => {
+      try {
+        const response = await fetch(
+          `https://www.googleapis.com/books/v1/volumes/${id}`
+        );
+        const book = await response.json();
+        setBook(book);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchBook();
   }, [id]);
 
   return (

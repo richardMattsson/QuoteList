@@ -15,13 +15,12 @@ function BookCard({
   const navigate = useNavigate();
 
   function handleClick() {
+    navigate(`/bookDetails/${id}`);
+
     if (setShowDetails) {
       setShowDetails(true);
     }
-
-    navigate(`/bookDetails/${id}`);
   }
-  console.log(showDetails);
 
   return (
     <section

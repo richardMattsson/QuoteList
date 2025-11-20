@@ -1,11 +1,11 @@
 import { useState } from "react";
 import BookCard from "./BookCard";
-import type { BooksType } from "../../lib/type";
+import { useBookContext } from "../context/bookContext";
 
 function Books() {
   const [inputValue, setInputValue] = useState("");
-  const [books, setBooks] = useState<BooksType[] | null>(null);
   const [showDetails, setShowDetails] = useState(false);
+  const { books, setBooks } = useBookContext();
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
