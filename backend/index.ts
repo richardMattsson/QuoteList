@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 const port = process.env.PORT || 3000;
 
 app.get("/api/quotes", async (_request, response) => {
-  const { rows } = await client.query("SELECT * FROM quotes;");
+  const { rows } = await client.query("SELECT * FROM quotes");
 
   response.send(rows);
 });
