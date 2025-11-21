@@ -6,10 +6,12 @@ import Books from "../components/Books";
 
 import type { QuoteType } from "../../lib/type";
 import { useQuoteContext } from "../context/QuoteContext";
+import SearchQuote from "../components/SearchQuote";
 
 function Home() {
   const [quotes, setQuotes] = useState<QuoteType[] | null>(null);
   const { setQuoteDisplay } = useQuoteContext();
+  const [searchResults, setSearchResults] = useState<QuoteType[] | null>(null);
 
   useEffect(() => {
     async function fetchQuotes() {
@@ -26,8 +28,9 @@ function Home() {
   }, []);
   return (
     <>
+      <SearchQuote quotes={quotes} setSearchResults={setSearchResults} />
       <div style={{ display: "flex", marginBottom: "2rem" }}>
-        <QuoteButtons quotes={quotes} />
+        <QuoteButtons quotes={searchResults} />
         <QuoteSection quotes={quotes} setQuotes={setQuotes} />
       </div>
       <Books />

@@ -25,13 +25,13 @@ function QuoteSection({ quotes, setQuotes }: QuoteSectionProps) {
     update: false,
   });
 
-  function resetProcess(button: "add" | "update") {
+  function resetProcess(button: "add" | "update"): void {
     setInProgress(null);
     setForm({ name: "", quote: "" });
     setFormButton({ ...formButton, [button]: false });
   }
 
-  function handleQuoteForm(e: React.FormEvent<HTMLFormElement>) {
+  function handleQuoteForm(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
     async function postQuote() {
       try {
@@ -59,14 +59,14 @@ function QuoteSection({ quotes, setQuotes }: QuoteSectionProps) {
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
+  ): void => {
     setForm({
       ...form,
       [e.target.name]: e.target.value,
     });
   };
 
-  function sendUpdate(e: React.FormEvent<HTMLFormElement>) {
+  function sendUpdate(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
 
     async function updateQuote() {
@@ -93,7 +93,7 @@ function QuoteSection({ quotes, setQuotes }: QuoteSectionProps) {
     updateQuote();
   }
 
-  function handleDelete() {
+  function handleDelete(): void {
     const proceed = prompt(`Vill du radera
       namn: ${quoteDisplay ? quoteDisplay.name : "Hittar inte författaren"}
       citat: ${quoteDisplay ? quoteDisplay?.quote : "Hittar inte citatet"}

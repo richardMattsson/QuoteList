@@ -1,4 +1,5 @@
 import express from "express";
+import type { Request, Response } from "express";
 import path from "path";
 import dotenv from "dotenv";
 import { Client } from "pg";
@@ -18,7 +19,7 @@ app.use(express.urlencoded({ extended: true }));
 
 const port = process.env.PORT || 3000;
 
-app.get("/api/quotes", async (_request, response) => {
+app.get("/api/quotes", async (_request: Request, response: Response) => {
   const { rows } = await client.query("SELECT * FROM quotes");
 
   response.send(rows);
@@ -34,7 +35,7 @@ app.post("/api/post", async (request, response) => {
   response.send(rows);
 });
 
-app.put("/api/put/:id", async (request, response) => {
+app.put("/api/put/:id", async (request: Request, response: Response) => {
   const { name, quote } = request.body;
   const { id } = request.params;
 
@@ -45,7 +46,7 @@ app.put("/api/put/:id", async (request, response) => {
   response.send(rows);
 });
 
-app.delete("/api/delete/:id", async (request, response) => {
+app.delete("/api/delete/:id", async (request: Request, response: Response) => {
   const { id } = request.params;
 
   await client.query("DELETE FROM quotes WHERE id = $1;", [id]);
