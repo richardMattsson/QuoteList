@@ -14,7 +14,6 @@ function InputButtons({
   inProgress,
   handleDelete,
 }: InputButtonsProps) {
-  console.log("Inputbuttons renderar");
   const { quoteDisplay } = useQuoteContext();
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {

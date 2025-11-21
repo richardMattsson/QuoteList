@@ -1,8 +1,8 @@
 import { useQuoteContext } from "../context/QuoteContext";
 
 function DisplayQuote() {
-  console.log("DisplayQuote renderar");
   const { quoteDisplay } = useQuoteContext();
+
   return (
     <div
       style={{

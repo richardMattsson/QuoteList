@@ -14,7 +14,7 @@ function Home() {
   useEffect(() => {
     async function fetchQuotes() {
       try {
-        const response = await fetch("/api/quotes");
+        const response = await fetch("/database.json");
         const quotes: QuoteType[] | null = await response.json();
         setQuoteDisplay(quotes ? quotes[0] : null);
         setQuotes(quotes);

@@ -7,13 +7,11 @@ type QuoteButtonsProps = {
 
 function QuoteButtons({ quotes }: QuoteButtonsProps) {
   const { quoteDisplay, setQuoteDisplay } = useQuoteContext();
-  console.log("QuoteButtons renderar");
   return (
     <div
       style={{
         display: "flex",
         flexDirection: "column",
-        // border: "1px solid white",
       }}
     >
       {quotes &&
