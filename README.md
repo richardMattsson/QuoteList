@@ -19,3 +19,5 @@ Utan databas går det bara att se citat i frontend men inte ändra.
                 - Inputbuttons
             -Books
                 - BookCard
+        - BookDetails
+            - BookCard

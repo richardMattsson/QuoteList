@@ -2,3 +2,6 @@ node_modules
 dist
 .env
 index.js
+index.d.ts
+index.d.ts.map
+index.js.map
