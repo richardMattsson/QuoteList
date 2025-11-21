@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "name": "Albert Einstein",
+    "quote": "Life is like riding a bicycle. To keep your balance, you must keep moving."
+  },
+  {
+    "id": 2,
+    "name": "Oscar Wilde",
+    "quote": "Be yourself; everyone else is already taken."
+  },
+  {
+    "id": 3,
+    "name": "William Shakespeare",
+    "quote": "To be or not to be, that is the question."
+  }
+]
