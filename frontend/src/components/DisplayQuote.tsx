@@ -1,10 +1,8 @@
-import type { QuoteType } from "../../lib/type";
+import { useQuoteContext } from "../context/QuoteContext";
 
-type DisplayQuoteProps = {
-  quoteDisplay: QuoteType | null;
-};
-
-function DisplayQuote({ quoteDisplay }: DisplayQuoteProps) {
+function DisplayQuote() {
+  console.log("DisplayQuote renderar");
+  const { quoteDisplay } = useQuoteContext();
   return (
     <div
       style={{

@@ -2,36 +2,33 @@ import { useState, useEffect } from "react";
 
 import QuoteButtons from "../components/QuoteButtons";
 import QuoteSection from "../components/QuoteSection";
+import Books from "../components/Books";
 
 import type { QuoteType } from "../../lib/type";
-import Books from "../components/Books";
+import { useQuoteContext } from "../context/QuoteContext";
 
 function Home() {
   const [quotes, setQuotes] = useState<QuoteType[] | null>(null);
-  const [quoteDisplay, setQuoteDisplay] = useState<QuoteType | null>(null);
+  const { setQuoteDisplay } = useQuoteContext();
 
   useEffect(() => {
-    fetch("/database.json")
-      .then((response) => response.json())
-      .then((result: QuoteType[]) => {
-        setQuotes(result);
-        setQuoteDisplay(result[0]);
-      });
+    async function fetchQuotes() {
+      try {
+        const response = await fetch("/api/quotes");
+        const quotes: QuoteType[] | null = await response.json();
+        setQuoteDisplay(quotes ? quotes[0] : null);
+        setQuotes(quotes);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchQuotes();
   }, []);
   return (
     <>
       <div style={{ display: "flex", marginBottom: "2rem" }}>
-        <QuoteButtons
-          quotes={quotes}
-          setQuoteDisplay={setQuoteDisplay}
-          quoteDisplay={quoteDisplay}
-        />
-        <QuoteSection
-          quotes={quotes}
-          setQuotes={setQuotes}
-          setQuoteDisplay={setQuoteDisplay}
-          quoteDisplay={quoteDisplay}
-        />
+        <QuoteButtons quotes={quotes} />
+        <QuoteSection quotes={quotes} setQuotes={setQuotes} />
       </div>
       <Books />
     </>

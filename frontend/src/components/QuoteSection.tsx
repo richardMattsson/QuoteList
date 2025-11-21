@@ -6,20 +6,17 @@ import Form from "./Form";
 import type { QuoteType } from "../../lib/type";
 import type { FormType } from "../../lib/type";
 import type { FormButtonType } from "../../lib/type";
+import { useQuoteContext } from "../context/QuoteContext";
 
 type QuoteSectionProps = {
-  setQuotes: React.Dispatch<React.SetStateAction<QuoteType[] | null>>;
-  setQuoteDisplay: React.Dispatch<React.SetStateAction<QuoteType | null>>;
-  quoteDisplay: QuoteType | null;
   quotes: QuoteType[] | null;
+  setQuotes: React.Dispatch<React.SetStateAction<QuoteType[] | null>>;
 };
 
-function QuoteSection({
-  setQuotes,
-  setQuoteDisplay,
-  quoteDisplay,
-  quotes,
-}: QuoteSectionProps) {
+function QuoteSection({ quotes, setQuotes }: QuoteSectionProps) {
+  console.log("QuoteSection renderar");
+
+  const { quoteDisplay, setQuoteDisplay } = useQuoteContext();
   const [form, setForm] = useState<FormType>({
     name: "",
     quote: "",
@@ -154,13 +151,12 @@ function QuoteSection({
           />
         </div>
 
-        <DisplayQuote quoteDisplay={quoteDisplay} />
+        <DisplayQuote />
       </div>
       <InputButtons
         inProgress={inProgress}
         setFormButton={setFormButton}
         formButton={formButton}
-        quoteDisplay={quoteDisplay}
         handleDelete={handleDelete}
       />
     </>

@@ -1,16 +1,13 @@
 import type { QuoteType } from "../../lib/type";
+import { useQuoteContext } from "../context/QuoteContext";
 
 type QuoteButtonsProps = {
   quotes: QuoteType[] | null;
-  quoteDisplay: QuoteType | null;
-  setQuoteDisplay: React.Dispatch<React.SetStateAction<QuoteType | null>>;
 };
 
-function QuoteButtons({
-  quotes,
-  quoteDisplay,
-  setQuoteDisplay,
-}: QuoteButtonsProps) {
+function QuoteButtons({ quotes }: QuoteButtonsProps) {
+  const { quoteDisplay, setQuoteDisplay } = useQuoteContext();
+  console.log("QuoteButtons renderar");
   return (
     <div
       style={{

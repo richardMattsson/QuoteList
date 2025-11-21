@@ -1,9 +1,8 @@
-import type { QuoteType } from "../../lib/type";
 import type { FormButtonType } from "../../lib/type";
+import { useQuoteContext } from "../context/QuoteContext";
 
 type InputButtonsProps = {
   formButton: FormButtonType;
-  quoteDisplay: QuoteType | null;
   setFormButton: React.Dispatch<React.SetStateAction<FormButtonType>>;
   inProgress: number | boolean | null;
   handleDelete: () => void;
@@ -12,10 +11,12 @@ type InputButtonsProps = {
 function InputButtons({
   formButton,
   setFormButton,
-  quoteDisplay,
   inProgress,
   handleDelete,
 }: InputButtonsProps) {
+  console.log("Inputbuttons renderar");
+  const { quoteDisplay } = useQuoteContext();
+
   const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     if (e.currentTarget.accessKey === "add") {
       formButton.update

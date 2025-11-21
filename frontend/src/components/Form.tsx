@@ -24,6 +24,7 @@ function Form({
   inProgress,
   addText,
 }: FormProps) {
+  console.log("Form renderar");
   return (
     <form
       onSubmit={formButton.add ? handleQuoteForm : sendUpdate}
