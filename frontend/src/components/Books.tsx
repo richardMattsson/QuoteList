@@ -24,6 +24,7 @@ function Books() {
         </h1>
         <form onSubmit={handleSubmit} className="Home-form">
           <input
+            data-test="test-booksearch"
             style={{ fontSize: "20px" }}
             type="text"
             onChange={(e) => setInputValue(e.target.value)}
@@ -31,13 +32,17 @@ function Books() {
             className="Home-input"
           />
 
-          <button type="submit" style={{ width: "100px" }}>
+          <button
+            data-test="test-submitbutton"
+            type="submit"
+            style={{ width: "100px" }}
+          >
             Sök
           </button>
         </form>
       </section>
 
-      <article className={"Home-article"}>
+      <article className={"Home-article"} data-test="test-bookArticle">
         {books &&
           books.map((book) => (
             <BookCard

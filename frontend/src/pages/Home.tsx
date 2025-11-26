@@ -18,8 +18,8 @@ function Home() {
       try {
         const response = await fetch("/database.json");
         const quotes: QuoteType[] | null = await response.json();
-        setQuoteDisplay(quotes ? quotes[0] : null);
         setQuotes(quotes);
+        setQuoteDisplay(quotes ? quotes[0] : null);
       } catch (error) {
         console.log(error);
       }
@@ -28,9 +28,16 @@ function Home() {
   }, []);
   return (
     <>
+      <h1 data-test="home-heading" style={{ textAlign: "center" }}>
+        Quotes and books
+      </h1>
       <SearchQuote quotes={quotes} setSearchResults={setSearchResults} />
       <div style={{ display: "flex", marginBottom: "2rem" }}>
-        <QuoteButtons quotes={searchResults} />
+        <QuoteButtons
+          quotes={
+            searchResults && searchResults.length > 0 ? searchResults : quotes
+          }
+        />
         <QuoteSection quotes={quotes} setQuotes={setQuotes} />
       </div>
       <Books />

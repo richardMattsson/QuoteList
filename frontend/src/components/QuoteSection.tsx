@@ -15,7 +15,8 @@ type QuoteSectionProps = {
 
 function QuoteSection({ quotes, setQuotes }: QuoteSectionProps) {
   const { quoteDisplay, setQuoteDisplay } = useQuoteContext();
-  const [form, setForm] = useState<FormType>({
+  const [form, setForm] = useState<QuoteType>({
+    id: 0,
     name: "",
     quote: "",
   });
@@ -27,12 +28,13 @@ function QuoteSection({ quotes, setQuotes }: QuoteSectionProps) {
 
   function resetProcess(button: "add" | "update"): void {
     setInProgress(null);
-    setForm({ name: "", quote: "" });
+    setForm({ id: 0, name: "", quote: "" });
     setFormButton({ ...formButton, [button]: false });
   }
 
   function handleQuoteForm(e: React.FormEvent<HTMLFormElement>): void {
     e.preventDefault();
+
     async function postQuote() {
       try {
         const response = await fetch("/api/post", {
@@ -47,10 +49,15 @@ function QuoteSection({ quotes, setQuotes }: QuoteSectionProps) {
         setQuoteDisplay(result[0]);
         resetProcess("add");
       } catch (error) {
-        resetProcess("add");
-        console.log(error);
-        alert(
-          "Något gick fel med att lägga till. Databasen är kanske inte ansluten."
+        if (quotes) {
+          let lastId = quotes[quotes.length - 1].id;
+          setForm({ ...form, id: lastId++ });
+          setQuotes([...quotes, form]);
+          resetProcess("add");
+        }
+        console.log(
+          "Det finns ingen databas att koppla upp till, inga ändringar sparas",
+          error
         );
       }
     }
@@ -82,10 +89,27 @@ function QuoteSection({ quotes, setQuotes }: QuoteSectionProps) {
         setQuoteDisplay(result[0]);
         resetProcess("update");
       } catch (error) {
+        if (quotes) {
+          const quoteToUpdate = quotes.find(
+            (quote) => quote.name === form.name
+          );
+          if (quoteToUpdate) {
+            quoteToUpdate.quote = form.quote;
+            quoteToUpdate.name = form.name;
+
+            const updatedArray = quotes.filter(
+              (quote) => quote.id !== quoteToUpdate.id
+            );
+
+            updatedArray.push(quoteToUpdate);
+            setQuotes(updatedArray);
+            resetProcess("update");
+          }
+        }
         resetProcess("update");
-        console.log(error);
-        alert(
-          "Något gick fel med att uppdatera. Databasen är kanske inte ansluten."
+        console.log(
+          "Det finns ingen databas att koppla upp till, inga ändringar sparas",
+          error
         );
       }
     }
@@ -115,11 +139,20 @@ function QuoteSection({ quotes, setQuotes }: QuoteSectionProps) {
           : [];
         setQuotes(updatedArray);
       } else {
-        console.log("error, response not ok. ", response);
         setInProgress(null);
-        alert(
-          "Något gick fel med att uppdatera. Databasen är kanske inte ansluten."
+        setQuoteDisplay(quotes ? quotes[0] : null);
+        const updatedArray = quotes
+          ? quotes.filter((quote) => quote.id !== quoteDisplay?.id)
+          : [];
+        setQuotes(updatedArray);
+        console.log("error, response not ok. ", response);
+        console.log(
+          "Det finns ingen databas att koppla upp till, inga ändringar sparas"
         );
+
+        // alert(
+        //   "Något gick fel med att uppdatera. Databasen är kanske inte ansluten."
+        // );
       }
     }
     deleteQuote();

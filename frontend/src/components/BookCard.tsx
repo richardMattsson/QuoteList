@@ -27,7 +27,12 @@ function BookCard({
       aria-labelledby="book-heading"
       className={showDetails ? "Bookdetail-container" : "BookCard-container"}
     >
-      <h2 id="book-heading" className="bookcard-header" onClick={handleClick}>
+      <h2
+        data-test={`test-bookTitle-${id}`}
+        id="book-heading"
+        className="bookcard-header"
+        onClick={handleClick}
+      >
         {volumeInfo.title}
       </h2>
 

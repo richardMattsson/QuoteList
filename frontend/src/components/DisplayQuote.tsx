@@ -15,7 +15,7 @@ function DisplayQuote() {
       <p style={{ fontStyle: "italic", textAlign: "center" }}>
         {quoteDisplay && `"${quoteDisplay.quote}"`}
       </p>
-      <p>{quoteDisplay && quoteDisplay.name}</p>
+      <p data-test="test-quote">{quoteDisplay && quoteDisplay.name}</p>
     </div>
   );
 }

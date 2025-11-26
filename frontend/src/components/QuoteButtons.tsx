@@ -9,6 +9,7 @@ function QuoteButtons({ quotes }: QuoteButtonsProps) {
   const { quoteDisplay, setQuoteDisplay } = useQuoteContext();
   return (
     <div
+      data-test="test-quotebuttons"
       style={{
         display: "flex",
         flexDirection: "column",
@@ -17,6 +18,7 @@ function QuoteButtons({ quotes }: QuoteButtonsProps) {
       {quotes &&
         quotes.map((quote) => (
           <button
+            data-test={`test-quotebutton-${quote.id}`}
             key={quote.id}
             className="button"
             style={{

@@ -25,13 +25,15 @@ function SearchQuote({ quotes, setSearchResults }: SearchQuoteProps) {
 
   return (
     <>
-      <label htmlFor="searchQuote">Sök citat</label>
       <input
+        data-test="test-searchinput"
+        id="searchQuote"
         name="searchQuote"
         type="text"
         value={text}
         onChange={(e) => setText(e.target.value)}
       />
+      <label htmlFor="searchQuote">Filtrera på namn</label>
     </>
   );
 }
