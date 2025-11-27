@@ -28,16 +28,26 @@ function Home() {
   }, []);
   return (
     <>
-      <h1 data-test="home-heading" style={{ textAlign: "center" }}>
-        Quotes and books
-      </h1>
-      <SearchQuote quotes={quotes} setSearchResults={setSearchResults} />
-      <div style={{ display: "flex", marginBottom: "2rem" }}>
-        <QuoteButtons
-          quotes={
-            searchResults && searchResults.length > 0 ? searchResults : quotes
-          }
-        />
+      <div
+        style={{ display: "flex", marginBottom: "2rem", minHeight: "450px" }}
+      >
+        <section
+          style={{
+            display: "grid",
+            gap: 5,
+            alignItems: "start",
+            padding: "2rem",
+            borderRight: "1px solid white",
+            borderBottom: "1px solid white",
+          }}
+        >
+          <SearchQuote quotes={quotes} setSearchResults={setSearchResults} />
+          <QuoteButtons
+            quotes={
+              searchResults && searchResults.length > 0 ? searchResults : quotes
+            }
+          />
+        </section>
         <QuoteSection quotes={quotes} setQuotes={setQuotes} />
       </div>
       <Books />

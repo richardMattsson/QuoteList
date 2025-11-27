@@ -11,8 +11,8 @@ function QuoteButtons({ quotes }: QuoteButtonsProps) {
     <div
       data-test="test-quotebuttons"
       style={{
-        display: "flex",
-        flexDirection: "column",
+        display: "grid",
+        gap: 15,
       }}
     >
       {quotes &&
@@ -25,7 +25,6 @@ function QuoteButtons({ quotes }: QuoteButtonsProps) {
               border: "1px solid grey",
               borderRadius: "5px",
               textAlign: "center",
-              margin: "10px",
               padding: "0 10px",
               cursor: "pointer",
             }}

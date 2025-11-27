@@ -34,6 +34,7 @@ function Form({
       }}
     >
       <input
+        data-test={"input-name"}
         onChange={handleChange}
         value={form.name}
         name="name"
@@ -46,6 +47,7 @@ function Form({
         }}
       />
       <textarea
+        data-test="textarea-quote"
         onChange={handleChange}
         value={form.quote}
         name="quote"
@@ -60,6 +62,7 @@ function Form({
       />
       <div style={{ display: "flex", justifyContent: "center" }}>
         <button
+          data-test="submit-quote-form"
           onClick={() => setInProgress(true)}
           type="submit"
           style={{

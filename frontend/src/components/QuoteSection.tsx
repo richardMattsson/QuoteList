@@ -118,14 +118,9 @@ function QuoteSection({ quotes, setQuotes }: QuoteSectionProps) {
   }
 
   function handleDelete(): void {
-    const proceed = prompt(`Vill du radera
-      namn: ${quoteDisplay ? quoteDisplay.name : "Hittar inte författaren"}
-      citat: ${quoteDisplay ? quoteDisplay?.quote : "Hittar inte citatet"}
-      Svara med författarens namn om du vill fortsätta.`);
-
-    if (proceed !== quoteDisplay?.name) return;
-
-    setInProgress(quoteDisplay.id);
+    {
+      quoteDisplay && setInProgress(quoteDisplay.id);
+    }
 
     async function deleteQuote() {
       const response = await fetch(`/api/delete/${quoteDisplay?.id}`, {
@@ -133,26 +128,23 @@ function QuoteSection({ quotes, setQuotes }: QuoteSectionProps) {
       });
       if (response.ok) {
         setInProgress(null);
-        setQuoteDisplay(quotes ? quotes[0] : null);
+        setQuoteDisplay(null);
         const updatedArray = quotes
           ? quotes.filter((quote) => quote.id !== quoteDisplay?.id)
           : [];
         setQuotes(updatedArray);
       } else {
         setInProgress(null);
-        setQuoteDisplay(quotes ? quotes[0] : null);
+
         const updatedArray = quotes
           ? quotes.filter((quote) => quote.id !== quoteDisplay?.id)
           : [];
         setQuotes(updatedArray);
+        setQuoteDisplay(null);
         console.log("error, response not ok. ", response);
         console.log(
           "Det finns ingen databas att koppla upp till, inga ändringar sparas"
         );
-
-        // alert(
-        //   "Något gick fel med att uppdatera. Databasen är kanske inte ansluten."
-        // );
       }
     }
     deleteQuote();
@@ -161,6 +153,7 @@ function QuoteSection({ quotes, setQuotes }: QuoteSectionProps) {
   return (
     <>
       <div
+        data-test="quote-section-container"
         style={{
           display: "flex",
           flexGrow: 1,
@@ -168,6 +161,9 @@ function QuoteSection({ quotes, setQuotes }: QuoteSectionProps) {
           justifyContent:
             formButton.add || formButton.update ? "space-between" : "center",
           alignItems: "center",
+          borderBottom: "1px solid white",
+          borderRight: "1px solid white",
+          padding: "2rem",
         }}
       >
         <div className={formButton.add ? "showForm" : "hideForm"}>

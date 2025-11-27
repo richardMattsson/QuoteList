@@ -30,8 +30,17 @@ function InputButtons({
   };
 
   return (
-    <div id="input-buttons-div">
+    <div
+      id="input-buttons-div"
+      style={{
+        display: "grid",
+        alignItems: "center",
+        padding: "2rem",
+        borderBottom: "1px solid white",
+      }}
+    >
       <button
+        data-test="input-button-add"
         className={formButton.add ? "buttonFocus" : "button"}
         accessKey="add"
         onClick={handleClick}
@@ -40,6 +49,7 @@ function InputButtons({
       </button>
 
       <button
+        data-test="input-button-update"
         className={formButton.update ? "buttonFocus" : "button"}
         accessKey="update"
         onClick={handleClick}
@@ -47,7 +57,11 @@ function InputButtons({
         {formButton.update ? "Stäng formulär" : "Uppdatera citat"}
       </button>
 
-      <button className="button" onClick={handleDelete}>
+      <button
+        data-test="input-button-delete"
+        className="button"
+        onClick={handleDelete}
+      >
         {quoteDisplay && inProgress === quoteDisplay.id ? (
           <div className="loader"></div>
         ) : (
