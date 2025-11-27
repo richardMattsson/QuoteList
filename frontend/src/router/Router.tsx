@@ -27,7 +27,7 @@ function Router() {
           element: <BookDetails />,
         },
         {
-          path: "/account?/:name",
+          path: "/account/:name?",
           element: <Account />,
         },
       ],

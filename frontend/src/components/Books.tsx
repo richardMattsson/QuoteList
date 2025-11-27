@@ -22,7 +22,7 @@ function Books() {
         <h1 id="search-heading" className="Home-h1">
           Sök efter en bok
         </h1>
-        <form onSubmit={handleSubmit} className="Home-form">
+        <form onSubmit={handleSubmit} method="post" className="Home-form">
           <input
             data-test="test-booksearch"
             style={{ fontSize: "20px" }}
