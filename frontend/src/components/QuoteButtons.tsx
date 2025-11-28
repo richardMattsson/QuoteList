@@ -15,6 +15,7 @@ function QuoteButtons({ quotes }: QuoteButtonsProps) {
         gap: 15,
       }}
     >
+      {!quotes && "Laddar citat..."}
       {quotes &&
         quotes.map((quote) => (
           <button

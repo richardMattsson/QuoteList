@@ -1,7 +1,10 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useUserContext } from "../context/UserContext";
 
 function Navbar() {
   const navigate = useNavigate();
+  const { email } = useParams();
+  const { user } = useUserContext();
 
   return (
     <>
@@ -22,14 +25,14 @@ function Navbar() {
             marginLeft: "20px",
             // border: "1px solid white",
           }}
-          onClick={() => navigate("/")}
+          onClick={() => navigate(`/${user ? user.email : ""}`)}
         >
           Quotes & Books
         </h1>
-
+        {/* <i className="fa-solid fa-user-check"></i> */}
         <i
-          onClick={() => navigate("/account")}
-          className="fa-solid fa-user fa-2xl"
+          onClick={() => navigate(`/account/${user ? user.email : ""}`)}
+          className={`fa-solid ${user ? "fa-user-check" : "fa-user"} fa-2xl`}
           data-test="account-icon"
           style={{
             cursor: "pointer",

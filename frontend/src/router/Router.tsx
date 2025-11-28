@@ -19,7 +19,7 @@ function Router() {
       ),
       children: [
         {
-          path: "/",
+          path: "/:email?",
           element: <Home />,
         },
         {
@@ -27,7 +27,7 @@ function Router() {
           element: <BookDetails />,
         },
         {
-          path: "/account/:name?",
+          path: "/account/:email?",
           element: <Account />,
         },
       ],

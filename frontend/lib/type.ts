@@ -1,3 +1,9 @@
+export type UserType = {
+  id: number;
+  email: string;
+  password: string;
+};
+
 export type QuoteType = {
   id: number;
   name: string;
